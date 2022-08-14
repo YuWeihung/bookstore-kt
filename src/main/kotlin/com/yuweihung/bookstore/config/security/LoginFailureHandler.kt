@@ -2,6 +2,7 @@ package com.yuweihung.bookstore.config.security
 
 import com.yuweihung.bookstore.response.ErrorCode
 import com.yuweihung.bookstore.response.Response
+import mu.KotlinLogging
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.InternalAuthenticationServiceException
 import org.springframework.security.core.AuthenticationException
@@ -9,6 +10,8 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.stereotype.Component
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+
+private val logger = KotlinLogging.logger { }
 
 /**
  * 登录失败根据情况返回相应信息
@@ -35,6 +38,7 @@ class LoginFailureHandler : AuthenticationFailureHandler {
                 Response.failure(ErrorCode.UNKNOWN_ERROR)
             }
         }
+        logger.error { exception?.message }
         response?.let { Response.render(it, result) }
     }
 }

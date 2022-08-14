@@ -2,20 +2,20 @@ package com.yuweihung.bookstore.bean.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.Entity
-import javax.persistence.ManyToMany
+import javax.persistence.OneToMany
 import javax.persistence.Table
 
 /**
- * 用户权限实体类
+ * 作者实体类
  * @author Yu Weihong
  * @since 2022/7/15
  */
 @Entity
-@Table(name = "role")
-class Role(
+@Table(name = "author")
+class Author(
     var name: String,
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "roles")
-    var users: MutableSet<User> = mutableSetOf(),
+    @OneToMany(mappedBy = "author")
+    var books: MutableSet<Book> = mutableSetOf(),
 ) : BaseEntity()

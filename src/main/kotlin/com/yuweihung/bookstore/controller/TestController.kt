@@ -31,9 +31,11 @@ class TestController(
     }
 
     @GetMapping("/test")
-    fun getUser(): Response {
-        val result = bookService.addBook("C++ primer")
+    fun test(name: String): Response {
+//        val result = bookService.addBook()
+        val result = bookService.getName(name)
         return Response.success(result)
+//        return Response.success()
     }
 
     @GetMapping("/test/{username}")
@@ -41,9 +43,5 @@ class TestController(
         return Response.success(username)
     }
 
-    @GetMapping("/test/init")
-    fun initRole(): Response {
-        accountService.initDB()
-        return Response.success("init database")
-    }
+
 }

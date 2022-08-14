@@ -1,6 +1,6 @@
 package com.yuweihung.bookstore.bean.entity
 
-import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -21,11 +21,11 @@ class BaseEntity {
     @Column(name = "id", nullable = false)
     var id: Long? = null
 
+    @JsonIgnore
     @CreatedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     var createdTime: LocalDateTime? = null
 
+    @JsonIgnore
     @LastModifiedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     var modifiedTime: LocalDateTime? = null
 }

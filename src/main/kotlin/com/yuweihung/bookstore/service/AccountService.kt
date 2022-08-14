@@ -38,7 +38,7 @@ class AccountService(
         roleRepository.save(userRole)
         val encryptPassword = encoder.encode("admin")
         val adminRoleSet = mutableSetOf(userRole, adminRole)
-        val admin = User("admin", encryptPassword, adminRoleSet)
+        val admin = User("admin", encryptPassword, 0, adminRoleSet)
         userRepository.save(admin)
         logger.info { "Init the database" }
     }
@@ -58,7 +58,7 @@ class AccountService(
         } else {
             mutableSetOf(role)
         }
-        val user = User(userDto.username, encryptPassword, roles)
+        val user = User(userDto.username, encryptPassword, userDto.gender, roles)
         return userRepository.save(user)
     }
 

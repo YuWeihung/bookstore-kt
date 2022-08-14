@@ -17,7 +17,7 @@ internal class AccountServiceTest(@Autowired val accountService: AccountService)
 
     @Test
     fun register() {
-        val userDto = UserDto("def", "123456")
+        val userDto = UserDto("def", "123456", 0)
         val result = accountService.register(userDto)
         assertEquals("def", result.username)
     }
