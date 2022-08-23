@@ -8,8 +8,6 @@ import javax.persistence.Table
 
 /**
  * 书籍实体类
- * @author Yu Weihong
- * @since 2022/7/15
  */
 @Entity
 @Table(name = "book")
@@ -23,6 +21,8 @@ class Book(
     var pageCount: Int,
 
     var publishDate: YearMonth,
+
+    var inventory: Int,
 
     @ManyToOne
     var press: Press,

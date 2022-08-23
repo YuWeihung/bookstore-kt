@@ -3,6 +3,7 @@ package com.yuweihung.bookstore.config
 import com.yuweihung.bookstore.config.security.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -14,10 +15,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * Spring Security 配置类
- * @author Yu Weihong
- * @since 2022/7/20
  */
 @Configuration
+@EnableJpaAuditing
 @EnableWebSecurity
 class SecurityConfig(
     val successHandler: LoginSuccessHandler,

@@ -17,8 +17,6 @@ private val logger = KotlinLogging.logger { }
 
 /**
  * 书籍相关的服务类
- * @author Yu Weihong
- * @since 2022/7/25
  */
 @Transactional
 @Service
@@ -32,7 +30,7 @@ class BookService(
         val author = Author("Tom")
         val book = Book(
             "Thinking in Java", "123-456-789", BigDecimal("19.99"),
-            150, YearMonth.of(2020, 4), press, author
+            150, YearMonth.of(2020, 4), 100, press, author
         )
         pressRepository.save(press)
         authorRepository.save(author)

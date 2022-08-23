@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse
 
 /**
  * 登录成功返回响应
- * @author Yu Weihong
- * @since 2022/7/20
  */
 @Component
 class LoginSuccessHandler : AuthenticationSuccessHandler {

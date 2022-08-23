@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse
 
 /**
  * 用户未登录时返回信息
- * @author Yu Weihong
- * @since 2022/7/20
  */
 @Component
 class EntryPointHandler : AuthenticationEntryPoint {

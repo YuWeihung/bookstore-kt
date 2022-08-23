@@ -1,8 +1,10 @@
 package com.yuweihung.bookstore.controller
 
+import com.yuweihung.bookstore.repository.RoleRepository
 import com.yuweihung.bookstore.response.Response
-import com.yuweihung.bookstore.service.AccountService
 import com.yuweihung.bookstore.service.BookService
+import com.yuweihung.bookstore.service.UserService
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -11,14 +13,13 @@ import javax.validation.constraints.Min
 
 /**
  * 测试用控制类
- * @author Yu Weihong
- * @since 2022/7/30
  */
 @RestController
 @Validated
 class TestController(
-    val accountService: AccountService,
+    val userService: UserService,
     val bookService: BookService,
+    val roleRepository: RoleRepository,
 ) {
     @GetMapping("/admin/hello")
     fun helloAdmin(): Response {
@@ -30,12 +31,24 @@ class TestController(
         return Response.success("Hello")
     }
 
+    @Cacheable("books")
+    @GetMapping("/test/1")
+    fun test1(a: Int, b: Int): Response {
+        val c = a + b
+        return Response.success("$a + $b = $c")
+    }
+
+    @Cacheable
+    @GetMapping("/test/2")
+    fun test2(): Response {
+        return Response.success("Test 2")
+    }
+
+    @Cacheable("cache")
     @GetMapping("/test")
-    fun test(name: String): Response {
-//        val result = bookService.addBook()
-        val result = bookService.getName(name)
+    fun test(): Response {
+        val result = roleRepository.findByName("ROLE_ADMIN")!!
         return Response.success(result)
-//        return Response.success()
     }
 
     @GetMapping("/test/{username}")

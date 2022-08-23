@@ -4,6 +4,7 @@ import com.yuweihung.bookstore.response.ErrorCode
 import com.yuweihung.bookstore.response.ErrorException
 import com.yuweihung.bookstore.response.Response
 import mu.KotlinLogging
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -13,8 +14,6 @@ private val logger = KotlinLogging.logger { }
 
 /**
  * 全局异常处理
- * @author Yu Weihong
- * @since 2022/7/15
  */
 @RestControllerAdvice
 class ExceptionHandlerController {
@@ -23,7 +22,7 @@ class ExceptionHandlerController {
      */
     @ExceptionHandler(ErrorException::class)
     fun handleErrorException(e: ErrorException): Response {
-        logger.error { e.message }
+        logger.info { "业务异常: ${e.message}" }
         return Response.failure(e)
     }
 
@@ -33,7 +32,7 @@ class ExceptionHandlerController {
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleJsonParamException(e: MethodArgumentNotValidException): Response {
         val msg = e.fieldErrors[0].defaultMessage
-        logger.error { msg }
+        logger.info { "参数校验异常: $msg" }
         val response = if (msg == null) {
             Response.failure(ErrorCode.PARAM_NOT_VALID)
         } else {
@@ -48,7 +47,7 @@ class ExceptionHandlerController {
     @ExceptionHandler(ConstraintViolationException::class)
     fun handlePathParamException(e: ConstraintViolationException): Response {
         val msg = e.message
-        logger.error { msg }
+        logger.info { "参数校验异常: $msg" }
         val response = if (msg == null) {
             Response.failure(ErrorCode.PARAM_NOT_VALID)
         } else {
@@ -58,11 +57,20 @@ class ExceptionHandlerController {
     }
 
     /**
+     * 处理请求参数类型错误
+     */
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun handleInvalidFormatException(e: HttpMessageNotReadableException): Response {
+        logger.info { "参数校验异常: ${e.message}" }
+        return Response.failure(ErrorCode.PARAM_NOT_VALID)
+    }
+
+    /**
      * 处理其他异常
      */
     @ExceptionHandler(Exception::class)
     fun handleOtherException(e: Exception): Response {
-        logger.error { e.message }
+        logger.error { "其他异常: $e" }
         return Response.failure(ErrorCode.UNKNOWN_ERROR)
     }
 }

@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse
 
 /**
  * 用户无权访问时返回信息
- * @author Yu Weihong
- * @since 2022/7/20
  */
 @Component
 class DeniedHandler : AccessDeniedHandler {

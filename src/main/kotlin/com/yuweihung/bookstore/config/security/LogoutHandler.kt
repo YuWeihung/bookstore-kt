@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse
 
 /**
  * 注销成功后返回信息
- * @author Yu Weihong
- * @since 2022/7/20
  */
 @Component
 class LogoutHandler : LogoutSuccessHandler {

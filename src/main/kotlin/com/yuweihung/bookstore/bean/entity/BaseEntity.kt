@@ -1,6 +1,5 @@
 package com.yuweihung.bookstore.bean.entity
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
@@ -10,8 +9,6 @@ import javax.persistence.*
 /**
  * 基础实体类，其他实体由此继承
  * 开启审计，自动更新实体的创建和修改时间
- * @author Yu Weihong
- * @since 2022/7/15
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
@@ -21,11 +18,9 @@ class BaseEntity {
     @Column(name = "id", nullable = false)
     var id: Long? = null
 
-    @JsonIgnore
     @CreatedDate
     var createdTime: LocalDateTime? = null
 
-    @JsonIgnore
     @LastModifiedDate
     var modifiedTime: LocalDateTime? = null
 }

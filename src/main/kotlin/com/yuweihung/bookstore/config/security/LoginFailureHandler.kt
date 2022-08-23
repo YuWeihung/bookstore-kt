@@ -15,8 +15,6 @@ private val logger = KotlinLogging.logger { }
 
 /**
  * 登录失败根据情况返回相应信息
- * @author Yu Weihong
- * @since 2022/7/20
  */
 @Component
 class LoginFailureHandler : AuthenticationFailureHandler {

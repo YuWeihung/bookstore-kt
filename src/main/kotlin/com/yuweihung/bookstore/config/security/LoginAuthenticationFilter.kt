@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse
 
 /**
  * 自定义登录认证过滤器，接收 JSON 参数而不是 FormData
- * @author Yu Weihong
- * @since 2022/7/20
  */
 class LoginAuthenticationFilter : UsernamePasswordAuthenticationFilter() {
 

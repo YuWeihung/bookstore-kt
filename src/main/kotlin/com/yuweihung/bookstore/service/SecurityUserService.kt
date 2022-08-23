@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service
 
 /**
  * UserDetailsService 接口的实现，实现 Spring Security 的登录功能
- * @author Yu Weihong
- * @since 2022/7/20
  */
 @Service
 class SecurityUserService(val userRepository: UserRepository) : UserDetailsService {

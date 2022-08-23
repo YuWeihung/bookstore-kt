@@ -2,8 +2,10 @@ package com.yuweihung.bookstore.service
 
 import com.yuweihung.bookstore.bean.dto.ChangePasswordDto
 import com.yuweihung.bookstore.bean.dto.UserDto
+import com.yuweihung.bookstore.bean.entity.Gender
 import com.yuweihung.bookstore.bean.entity.Role
 import com.yuweihung.bookstore.bean.entity.User
+import com.yuweihung.bookstore.bean.vo.UserVo
 import com.yuweihung.bookstore.repository.RoleRepository
 import com.yuweihung.bookstore.repository.UserRepository
 import com.yuweihung.bookstore.response.ErrorCode
@@ -16,13 +18,11 @@ import org.springframework.transaction.annotation.Transactional
 private val logger = KotlinLogging.logger { }
 
 /**
- * 账户相关的服务类
- * @author Yu Weihong
- * @since 2022/7/25
+ * 用户相关的服务类
  */
 @Transactional
 @Service
-class AccountService(
+class UserService(
     val userRepository: UserRepository,
     val roleRepository: RoleRepository,
     val encoder: PasswordEncoder,
@@ -38,7 +38,7 @@ class AccountService(
         roleRepository.save(userRole)
         val encryptPassword = encoder.encode("admin")
         val adminRoleSet = mutableSetOf(userRole, adminRole)
-        val admin = User("admin", encryptPassword, 0, adminRoleSet)
+        val admin = User("admin", encryptPassword, Gender.MALE, adminRoleSet)
         userRepository.save(admin)
         logger.info { "Init the database" }
     }
@@ -46,7 +46,7 @@ class AccountService(
     /**
      * 用户注册
      */
-    fun register(userDto: UserDto): User {
+    fun register(userDto: UserDto): UserVo {
         val count = userRepository.countByUsername(userDto.username)
         if (count > 0) {
             throw ErrorException(ErrorCode.USER_ALREADY_EXIST)
@@ -58,14 +58,16 @@ class AccountService(
         } else {
             mutableSetOf(role)
         }
-        val user = User(userDto.username, encryptPassword, userDto.gender, roles)
-        return userRepository.save(user)
+        val gender = if (userDto.gender == "female") Gender.FEMALE else Gender.MALE
+        val user = User(userDto.username, encryptPassword, gender, roles)
+        val result = userRepository.save(user)
+        return UserVo(result)
     }
 
     /**
      * 更改密码
      */
-    fun changePassword(changePasswordDto: ChangePasswordDto): User {
+    fun changePassword(changePasswordDto: ChangePasswordDto): UserVo {
         val user = userRepository.findByUsername(changePasswordDto.username)
         if (user == null) {
             throw ErrorException(ErrorCode.USER_NOT_EXIST)
@@ -74,8 +76,17 @@ class AccountService(
         } else {
             val encryptPassword = encoder.encode(changePasswordDto.newPassword)
             user.password = encryptPassword
-            return userRepository.save(user)
+            userRepository.save(user)
+            return UserVo(user)
         }
+    }
+
+    /**
+     * 获取指定用户信息
+     */
+    fun getUser(username: String): UserVo {
+        val user = userRepository.findByUsername(username)
+        return user?.let { UserVo(it) } ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
     }
 
 }

@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletResponse
 
 /**
  * HTTP 响应的格式定义和封装
- * @author Yu Weihong
- * @since 2022/7/15
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class Response(
