@@ -11,7 +11,8 @@ import javax.persistence.Table
 @Table(name = "press")
 class Press(
     var name: String,
+) : BaseEntity() {
 
     @OneToMany(mappedBy = "press")
-    var books: MutableSet<Book> = mutableSetOf(),
-) : BaseEntity()
+    var books: MutableSet<Book> = mutableSetOf()
+}

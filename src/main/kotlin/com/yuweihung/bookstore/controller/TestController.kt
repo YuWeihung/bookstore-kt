@@ -1,6 +1,5 @@
 package com.yuweihung.bookstore.controller
 
-import com.yuweihung.bookstore.repository.RoleRepository
 import com.yuweihung.bookstore.response.Response
 import com.yuweihung.bookstore.service.BookService
 import com.yuweihung.bookstore.service.UserService
@@ -19,7 +18,6 @@ import javax.validation.constraints.Min
 class TestController(
     val userService: UserService,
     val bookService: BookService,
-    val roleRepository: RoleRepository,
 ) {
     @GetMapping("/admin/hello")
     fun helloAdmin(): Response {
@@ -44,12 +42,10 @@ class TestController(
         return Response.success("Test 2")
     }
 
-    @Cacheable("cache")
-    @GetMapping("/test")
-    fun test(): Response {
-        val result = roleRepository.findByName("ROLE_ADMIN")!!
-        return Response.success(result)
-    }
+//    @GetMapping("/test")
+//    fun test(): Response {
+//        return Response.success(result)
+//    }
 
     @GetMapping("/test/{username}")
     fun test2(@Min(3, message = "还是太短了") @PathVariable("username") username: String): Response {

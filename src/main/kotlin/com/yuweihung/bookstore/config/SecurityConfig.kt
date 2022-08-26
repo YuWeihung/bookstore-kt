@@ -36,6 +36,8 @@ class SecurityConfig(
             authorizeRequests {
                 authorize("/admin/**", hasAuthority("ROLE_ADMIN"))
                 authorize("/register/**", permitAll)
+                authorize("/index/**", permitAll)
+                authorize("/search/**", permitAll)
                 authorize("/test/**", permitAll)
                 authorize(anyRequest, authenticated)
             }

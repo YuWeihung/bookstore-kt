@@ -38,7 +38,7 @@ class SecurityUserService(val userRepository: UserRepository) : UserDetailsServi
         override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
             val authorities = mutableSetOf<GrantedAuthority>()
             for (role in user.roles) {
-                authorities.add(SimpleGrantedAuthority(role.name))
+                authorities.add(SimpleGrantedAuthority("ROLE_${role.name}"))
             }
             return authorities
         }

@@ -1,7 +1,7 @@
 package com.yuweihung.bookstore.bean.entity
 
 import javax.persistence.Entity
-import javax.persistence.OneToMany
+import javax.persistence.ManyToMany
 import javax.persistence.Table
 
 /**
@@ -11,7 +11,8 @@ import javax.persistence.Table
 @Table(name = "author")
 class Author(
     var name: String,
+) : BaseEntity() {
 
-    @OneToMany(mappedBy = "author")
-    var books: MutableSet<Book> = mutableSetOf(),
-) : BaseEntity()
+    @ManyToMany(mappedBy = "authors")
+    var books: MutableSet<Book> = mutableSetOf()
+}

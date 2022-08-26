@@ -6,7 +6,10 @@ import javax.persistence.*
  * 用户实体类
  */
 @Entity
-@Table(name = "\"user\"")
+@Table(
+    name = "\"user\"",
+    indexes = [Index(name = "uni_username", columnList = "username", unique = true)]
+)
 class User(
     var username: String,
 
@@ -21,9 +24,10 @@ class User(
         inverseJoinColumns = [JoinColumn(name = "role_id")]
     ) var roles: MutableSet<Role> = mutableSetOf(),
 
-    @OneToMany(mappedBy = "user")
-    var orders: MutableSet<Order> = mutableSetOf(),
-
     @OneToOne
-    var cart: Cart? = null,
-) : BaseEntity()
+    var cart: Cart,
+) : BaseEntity() {
+
+    @OneToMany(mappedBy = "user")
+    var orders: MutableSet<Order> = mutableSetOf()
+}

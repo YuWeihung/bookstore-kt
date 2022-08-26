@@ -12,7 +12,8 @@ import javax.persistence.Table
 @Table(name = "role")
 class Role(
     var name: String,
+) : BaseEntity() {
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    var users: MutableSet<User> = mutableSetOf(),
-) : BaseEntity()
+    var users: MutableSet<User> = mutableSetOf()
+}

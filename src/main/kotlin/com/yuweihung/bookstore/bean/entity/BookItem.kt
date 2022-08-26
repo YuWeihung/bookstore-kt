@@ -5,8 +5,8 @@ import javax.persistence.OneToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "book_amount")
-class BookAmount(
+@Table(name = "book_item")
+class BookItem(
     @OneToOne
     var book: Book,
 

@@ -2,20 +2,25 @@ package com.yuweihung.bookstore.bean.entity
 
 import java.math.BigDecimal
 import java.time.YearMonth
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
-import javax.persistence.Table
+import javax.persistence.*
 
 /**
  * 书籍实体类
  */
 @Entity
-@Table(name = "book")
+@Table(
+    name = "book",
+    indexes = [
+        Index(name = "idx_name", columnList = "name"),
+        Index(name = "uni_isbn", columnList = "isbn", unique = true)
+    ]
+)
 class Book(
     var name: String,
 
     var isbn: String,
 
+    @Column(precision = 12, scale = 4)
     var price: BigDecimal,
 
     var pageCount: Int,
@@ -27,6 +32,11 @@ class Book(
     @ManyToOne
     var press: Press,
 
-    @ManyToOne
-    var author: Author,
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "book_author",
+        joinColumns = [JoinColumn(name = "book_id")],
+        inverseJoinColumns = [JoinColumn(name = "author_id")]
+    )
+    var authors: MutableSet<Author> = mutableSetOf(),
 ) : BaseEntity()

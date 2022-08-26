@@ -11,11 +11,12 @@ class Order(
 
     @OneToMany
     @JoinTable(
-        name = "order_book_amount",
+        name = "order_book_item",
         joinColumns = [JoinColumn(name = "order_id")],
-        inverseJoinColumns = [JoinColumn(name = "book_amount_id")]
+        inverseJoinColumns = [JoinColumn(name = "book_item_id")]
     )
-    var books: MutableSet<BookAmount> = mutableSetOf(),
+    var books: MutableSet<BookItem> = mutableSetOf(),
 
+    @Column(precision = 12, scale = 4)
     var totalPrice: BigDecimal,
 ) : BaseEntity()

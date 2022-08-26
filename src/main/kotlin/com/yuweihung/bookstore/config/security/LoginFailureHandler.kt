@@ -36,7 +36,7 @@ class LoginFailureHandler : AuthenticationFailureHandler {
                 Response.failure(ErrorCode.UNKNOWN_ERROR)
             }
         }
-        logger.error { exception?.message }
+        logger.info { exception?.message }
         response?.let { Response.render(it, result) }
     }
 }

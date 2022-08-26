@@ -5,17 +5,18 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "cart")
-class Cart(
+class Cart : BaseEntity() {
     @OneToOne(mappedBy = "cart")
-    var user: User,
+    var user: User? = null
 
     @OneToMany
     @JoinTable(
-        name = "cart_book_amount",
+        name = "cart_book_item",
         joinColumns = [JoinColumn(name = "cart_id")],
-        inverseJoinColumns = [JoinColumn(name = "book_amount_id")]
+        inverseJoinColumns = [JoinColumn(name = "book_item_id")]
     )
-    var books: MutableSet<BookAmount> = mutableSetOf(),
+    var books: MutableSet<BookItem> = mutableSetOf()
 
-    var totalPrice: BigDecimal,
-) : BaseEntity()
+    @Column(precision = 12, scale = 4)
+    var totalPrice: BigDecimal = BigDecimal("0.00")
+}
