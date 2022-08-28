@@ -2,14 +2,17 @@ package com.yuweihung.bookstore.bean.vo
 
 import com.yuweihung.bookstore.bean.entity.User
 
-class UserVo(user: User) {
-    val id: Long?
-    val username: String
-    val gender: String
-    val roles: List<String>
-    val cartId: Long?
+/**
+ * 向前端返回的用户信息
+ */
+class UserVo() {
+    var id: Long? = null
+    var username: String = ""
+    var gender: String = ""
+    var roles: List<String> = listOf()
+    var cartId: Long? = null
 
-    init {
+    constructor(user: User) : this() {
         id = user.id
         username = user.username
         gender = user.gender.value

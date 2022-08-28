@@ -1,17 +1,15 @@
 package com.yuweihung.bookstore.config
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect
-import com.fasterxml.jackson.annotation.JsonTypeInfo
-import com.fasterxml.jackson.annotation.PropertyAccessor
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.yuweihung.bookstore.config.redis.CustomKeyGenerator
+import org.springframework.cache.annotation.CachingConfigurerSupport
 import org.springframework.cache.annotation.EnableCaching
+import org.springframework.cache.interceptor.KeyGenerator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.cache.RedisCacheConfiguration
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
 import org.springframework.data.redis.serializer.StringRedisSerializer
 import java.time.Duration
@@ -21,7 +19,9 @@ import java.time.Duration
  */
 @EnableCaching
 @Configuration
-class RedisConfig {
+class RedisConfig(
+    val keyGenerator: CustomKeyGenerator,
+) : CachingConfigurerSupport() {
     /**
      *  配置 redisTemplate，设置 JSON 序列化器
      */
@@ -30,15 +30,7 @@ class RedisConfig {
         val template: RedisTemplate<String, Any> = RedisTemplate()
         template.setConnectionFactory(factory)
         template.setEnableTransactionSupport(true)
-        val redisSerializer = Jackson2JsonRedisSerializer(Any::class.java)
-        val mapper = jacksonObjectMapper()
-        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
-        mapper.activateDefaultTyping(
-            mapper.polymorphicTypeValidator,
-            ObjectMapper.DefaultTyping.NON_FINAL,
-            JsonTypeInfo.As.PROPERTY
-        )
-        redisSerializer.setObjectMapper(mapper)
+        val redisSerializer = GenericJackson2JsonRedisSerializer()
         val stringSerializer = StringRedisSerializer()
         template.keySerializer = stringSerializer
         template.valueSerializer = redisSerializer
@@ -58,6 +50,10 @@ class RedisConfig {
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(template.valueSerializer))
             .disableCachingNullValues()
             .entryTtl(Duration.ofMinutes(5))
+    }
+
+    override fun keyGenerator(): KeyGenerator? {
+        return keyGenerator
     }
 
 }

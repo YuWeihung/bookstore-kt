@@ -6,7 +6,7 @@ import javax.validation.constraints.Min
 /**
  * 添加书籍接收的参数
  */
-data class AddBookDto(
+data class BookDto(
     val name: String,
     val isbn: String,
     val price: String,

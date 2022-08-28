@@ -65,7 +65,7 @@ class OrderService(
     /**
      * 获取用户所有订单
      */
-    fun getOrdersByUser(username: String, page: Int = 0): List<Order> {
+    fun getOrdersByUser(username: String, page: Int): List<Order> {
         val pageable = PageRequest.of(page, PAGE_SIZE)
         val orders = orderRepository.findByUser_Username(username, pageable)
         if (orders.isEmpty) {

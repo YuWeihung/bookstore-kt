@@ -1,7 +1,7 @@
 package com.yuweihung.bookstore.service
 
 import com.yuweihung.bookstore.bean.dto.ChangePasswordDto
-import com.yuweihung.bookstore.bean.dto.UserDto
+import com.yuweihung.bookstore.bean.dto.RegisterDto
 import com.yuweihung.bookstore.bean.entity.Cart
 import com.yuweihung.bookstore.bean.entity.Gender
 import com.yuweihung.bookstore.bean.entity.User
@@ -28,7 +28,7 @@ class UserService(
     /**
      * 用户注册
      */
-    fun register(userDto: UserDto): User {
+    fun register(userDto: RegisterDto): User {
         val count = userRepository.countByUsername(userDto.username)
         if (count > 0) {
             throw ErrorException(ErrorCode.USER_ALREADY_EXIST)

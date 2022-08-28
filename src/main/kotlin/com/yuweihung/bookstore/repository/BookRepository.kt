@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository
  * 书籍的数据库访问接口
  */
 interface BookRepository : JpaRepository<Book, Long> {
+
+    fun countByIsbn(isbn: String): Long
+
     fun findByInventoryGreaterThan(inventory: Int, pageable: Pageable): Page<Book>
 
     fun findByPress_IdAndInventoryGreaterThan(id: Long, inventory: Int, pageable: Pageable): Page<Book>

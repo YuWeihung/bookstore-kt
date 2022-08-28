@@ -1,7 +1,7 @@
 package com.yuweihung.bookstore.controller
 
 import com.yuweihung.bookstore.bean.dto.ChangePasswordDto
-import com.yuweihung.bookstore.bean.dto.UserDto
+import com.yuweihung.bookstore.bean.dto.RegisterDto
 import com.yuweihung.bookstore.bean.vo.UserVo
 import com.yuweihung.bookstore.response.Response
 import com.yuweihung.bookstore.service.UserService
@@ -19,8 +19,8 @@ class UserController(
      * 注册账户
      */
     @PostMapping("/register")
-    fun register(@Valid @RequestBody userDto: UserDto): Response {
-        val user = userService.register(userDto)
+    fun register(@Valid @RequestBody registerDto: RegisterDto): Response {
+        val user = userService.register(registerDto)
         val result = UserVo(user)
         return Response.success(result)
     }

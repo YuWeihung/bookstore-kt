@@ -1,6 +1,6 @@
 package com.yuweihung.bookstore.service
 
-import com.yuweihung.bookstore.bean.dto.AddBookDto
+import com.yuweihung.bookstore.bean.dto.BookDto
 import com.yuweihung.bookstore.bean.dto.InventoryDto
 import com.yuweihung.bookstore.bean.entity.Author
 import com.yuweihung.bookstore.bean.entity.Book
@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
 import java.time.YearMonth
 
+/**
+ * 管理员相关权限的服务类
+ */
 @Service
 @Transactional
 class AdminService(
@@ -26,14 +29,18 @@ class AdminService(
     /**
      * 添加书籍
      */
-    fun addBook(addBookDto: AddBookDto): Book {
-        var press = pressRepository.findByName(addBookDto.press)
+    fun addBook(bookDto: BookDto): Book {
+        val count = bookRepository.countByIsbn(bookDto.isbn)
+        if (count != 0L) {
+            throw ErrorException(ErrorCode.BOOK_ALREADY_EXIST)
+        }
+        var press = pressRepository.findByName(bookDto.press)
         if (press == null) {
-            press = Press(addBookDto.press)
+            press = Press(bookDto.press)
             pressRepository.save(press)
         }
         val authorSet = mutableSetOf<Author>()
-        for (name in addBookDto.authors) {
+        for (name in bookDto.authors) {
             var author = authorRepository.findByName(name)
             if (author == null) {
                 author = Author(name)
@@ -41,11 +48,11 @@ class AdminService(
             }
             authorSet.add(author)
         }
-        val price = BigDecimal(addBookDto.price)
-        val publishDate = YearMonth.of(addBookDto.publishYear, addBookDto.publishMonth)
+        val price = BigDecimal(bookDto.price)
+        val publishDate = YearMonth.of(bookDto.publishYear, bookDto.publishMonth)
         val book = Book(
-            addBookDto.name, addBookDto.isbn, price, addBookDto.pageCount,
-            publishDate, addBookDto.inventory, press, authorSet
+            bookDto.name, bookDto.isbn, price, bookDto.pageCount,
+            publishDate, bookDto.inventory, press, authorSet
         )
         return bookRepository.save(book)
     }

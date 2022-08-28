@@ -2,27 +2,31 @@ package com.yuweihung.bookstore.bean.vo
 
 import com.yuweihung.bookstore.bean.entity.Book
 import java.math.BigDecimal
-import java.time.YearMonth
 
-class BookVo(book: Book) {
-    var id: Long?
-    var name: String
-    var isbn: String
-    var price: BigDecimal
-    var pageCount: Int
-    var publishDate: YearMonth
-    var inventory: Int
-    var pressId: Long?
-    var pressName: String
-    var authors: List<AuthorVo>
+/**
+ * 向前端返回的书籍信息
+ */
+class BookVo() {
+    var id: Long? = null
+    var name: String = ""
+    var isbn: String = ""
+    var price: BigDecimal = BigDecimal("0.00")
+    var pageCount: Int = 0
+    var publishYear: Int = 0
+    var publishMonth: Int = 0
+    var inventory: Int = 0
+    var pressId: Long? = null
+    var pressName: String = ""
+    var authors: List<AuthorVo> = listOf()
 
-    init {
+    constructor(book: Book) : this() {
         id = book.id
         name = book.name
         isbn = book.isbn
         price = book.price
         pageCount = book.pageCount
-        publishDate = book.publishDate
+        publishYear = book.publishDate.year
+        publishMonth = book.publishDate.monthValue
         inventory = book.inventory
         pressId = book.press.id
         pressName = book.press.name

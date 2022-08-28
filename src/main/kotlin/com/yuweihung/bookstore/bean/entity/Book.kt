@@ -11,7 +11,6 @@ import javax.persistence.*
 @Table(
     name = "book",
     indexes = [
-        Index(name = "idx_name", columnList = "name"),
         Index(name = "uni_isbn", columnList = "isbn", unique = true)
     ]
 )

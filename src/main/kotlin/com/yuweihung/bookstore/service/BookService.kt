@@ -26,7 +26,7 @@ class BookService(
     /**
      * 分页获取全部书籍
      */
-    fun getBooks(page: Int = 0): List<Book> {
+    fun getBooks(page: Int): List<Book> {
         val pageable = PageRequest.of(page, PAGE_SIZE)
         val books = bookRepository.findByInventoryGreaterThan(0, pageable)
         if (books.isEmpty) {
@@ -39,7 +39,7 @@ class BookService(
     /**
      * 根据标题模糊搜索
      */
-    fun searchByName(name: String, page: Int = 0): List<Book> {
+    fun searchByName(name: String, page: Int): List<Book> {
         val pageable = PageRequest.of(page, PAGE_SIZE)
         val books = bookRepository.findByNameLikeAndInventoryGreaterThan("%$name%", 0, pageable)
         if (books.isEmpty) {
@@ -52,7 +52,7 @@ class BookService(
     /**
      * 根据出版社搜索
      */
-    fun searchByPress(pressId: Long, page: Int = 0): List<Book> {
+    fun searchByPress(pressId: Long, page: Int): List<Book> {
         val pageable = PageRequest.of(page, PAGE_SIZE)
         val books = bookRepository.findByPress_IdAndInventoryGreaterThan(pressId, 0, pageable)
         if (books.isEmpty) {
@@ -65,7 +65,7 @@ class BookService(
     /**
      * 根据作者搜索
      */
-    fun searchByAuthor(authorId: Long, page: Int = 0): List<Book> {
+    fun searchByAuthor(authorId: Long, page: Int): List<Book> {
         val pageable = PageRequest.of(page, PAGE_SIZE)
         val books = bookRepository.findByAuthors_IdAndInventoryGreaterThan(authorId, 0, pageable)
         if (books.isEmpty) {
