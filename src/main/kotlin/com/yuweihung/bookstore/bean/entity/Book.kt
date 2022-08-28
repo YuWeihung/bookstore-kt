@@ -20,7 +20,6 @@ class Book(
 
     var isbn: String,
 
-    @Column(precision = 12, scale = 4)
     var price: BigDecimal,
 
     var pageCount: Int,

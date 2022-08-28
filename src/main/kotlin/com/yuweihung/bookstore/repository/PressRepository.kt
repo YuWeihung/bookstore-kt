@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository
  */
 interface PressRepository : JpaRepository<Press, Long> {
 
-    fun findByName(name: String): List<Press>
+    fun findByName(name: String): Press?
 
 }

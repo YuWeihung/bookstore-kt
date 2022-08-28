@@ -11,6 +11,9 @@ import java.time.YearMonth
 
 private val logger = KotlinLogging.logger { }
 
+/**
+ * 测试用服务类
+ */
 @Transactional
 @Service
 class TestService(

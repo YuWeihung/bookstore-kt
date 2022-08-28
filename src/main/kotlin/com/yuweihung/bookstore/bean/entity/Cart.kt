@@ -3,6 +3,9 @@ package com.yuweihung.bookstore.bean.entity
 import java.math.BigDecimal
 import javax.persistence.*
 
+/**
+ * 购物车实体类
+ */
 @Entity
 @Table(name = "cart")
 class Cart : BaseEntity() {
@@ -11,12 +14,24 @@ class Cart : BaseEntity() {
 
     @OneToMany
     @JoinTable(
-        name = "cart_book_item",
+        name = "cart_item",
         joinColumns = [JoinColumn(name = "cart_id")],
-        inverseJoinColumns = [JoinColumn(name = "book_item_id")]
+        inverseJoinColumns = [JoinColumn(name = "item_id")]
     )
-    var books: MutableSet<BookItem> = mutableSetOf()
+    var items: MutableSet<Item> = mutableSetOf()
 
-    @Column(precision = 12, scale = 4)
     var totalPrice: BigDecimal = BigDecimal("0.00")
+
+    /**
+     * 计算总价
+     */
+    fun calculatePrice() {
+        var totalPrice = BigDecimal("0.00")
+        for (item in this.items) {
+            val amount = BigDecimal(item.amount)
+            val price = item.book.price.multiply(amount)
+            totalPrice = totalPrice.plus(price)
+        }
+        this.totalPrice = totalPrice
+    }
 }

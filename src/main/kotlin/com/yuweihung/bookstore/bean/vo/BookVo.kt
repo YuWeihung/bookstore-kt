@@ -14,7 +14,7 @@ class BookVo(book: Book) {
     var inventory: Int
     var pressId: Long?
     var pressName: String
-    var authors: List<String>
+    var authors: List<AuthorVo>
 
     init {
         id = book.id
@@ -26,6 +26,6 @@ class BookVo(book: Book) {
         inventory = book.inventory
         pressId = book.press.id
         pressName = book.press.name
-        authors = book.authors.map { it.name }
+        authors = book.authors.map { AuthorVo(it.id, it.name) }
     }
 }

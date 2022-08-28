@@ -4,7 +4,6 @@ import com.yuweihung.bookstore.bean.dto.ChangePasswordDto
 import com.yuweihung.bookstore.bean.dto.UserDto
 import com.yuweihung.bookstore.bean.vo.UserVo
 import com.yuweihung.bookstore.response.Response
-import com.yuweihung.bookstore.service.TestService
 import com.yuweihung.bookstore.service.UserService
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -15,14 +14,10 @@ import javax.validation.Valid
 @RestController
 class UserController(
     val userService: UserService,
-    val testService: TestService,
 ) {
-    @GetMapping("/test/init")
-    fun initRole(): Response {
-        testService.initDB()
-        return Response.success("init database")
-    }
-
+    /**
+     * 注册账户
+     */
     @PostMapping("/register")
     fun register(@Valid @RequestBody userDto: UserDto): Response {
         val user = userService.register(userDto)
@@ -30,6 +25,9 @@ class UserController(
         return Response.success(result)
     }
 
+    /**
+     * 修改密码
+     */
     @PostMapping("/change-password")
     fun changePassword(@Valid @RequestBody changePasswordDto: ChangePasswordDto): Response {
         val user = userService.changePassword(changePasswordDto)
@@ -37,6 +35,9 @@ class UserController(
         return Response.success(result)
     }
 
+    /**
+     * 获取指定用户信息
+     */
     @GetMapping("/user/{username}")
     fun getUser(@PathVariable("username") username: String): Response {
         val user = userService.getUser(username)

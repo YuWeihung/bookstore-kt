@@ -22,7 +22,9 @@ import java.time.Duration
 @EnableCaching
 @Configuration
 class RedisConfig {
-
+    /**
+     *  配置 redisTemplate，设置 JSON 序列化器
+     */
     @Bean
     fun redisTemplate(factory: RedisConnectionFactory): RedisTemplate<String, Any> {
         val template: RedisTemplate<String, Any> = RedisTemplate()
@@ -46,6 +48,9 @@ class RedisConfig {
         return template
     }
 
+    /**
+     * redis cache 配置，设置序列化及存储时间等
+     */
     @Bean
     fun cacheConfiguration(template: RedisTemplate<String, Any>): RedisCacheConfiguration {
         return RedisCacheConfiguration.defaultCacheConfig()

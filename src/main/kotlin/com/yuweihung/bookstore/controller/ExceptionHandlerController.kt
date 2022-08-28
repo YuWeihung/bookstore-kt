@@ -71,6 +71,7 @@ class ExceptionHandlerController {
     @ExceptionHandler(Exception::class)
     fun handleOtherException(e: Exception): Response {
         logger.error { "其他异常: $e" }
+        logger.error { "异常信息: ${e.message}" }
         return Response.failure(ErrorCode.UNKNOWN_ERROR)
     }
 }

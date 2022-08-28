@@ -3,6 +3,9 @@ package com.yuweihung.bookstore.bean.entity
 import java.math.BigDecimal
 import javax.persistence.*
 
+/**
+ * 订单实体类
+ */
 @Entity
 @Table(name = "\"order\"")
 class Order(
@@ -11,12 +14,11 @@ class Order(
 
     @OneToMany
     @JoinTable(
-        name = "order_book_item",
+        name = "order_item",
         joinColumns = [JoinColumn(name = "order_id")],
-        inverseJoinColumns = [JoinColumn(name = "book_item_id")]
+        inverseJoinColumns = [JoinColumn(name = "item_id")]
     )
-    var books: MutableSet<BookItem> = mutableSetOf(),
+    var items: MutableSet<Item> = mutableSetOf(),
 
-    @Column(precision = 12, scale = 4)
     var totalPrice: BigDecimal,
 ) : BaseEntity()
