@@ -1,6 +1,5 @@
 package com.yuweihung.bookstore.bean.dto
 
-
 /**
  * 登录接收的参数
  */

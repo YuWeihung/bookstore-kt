@@ -7,11 +7,13 @@ class UserVo(user: User) {
     val username: String
     val gender: String
     val roles: List<String>
+    val cartId: Long?
 
     init {
         id = user.id
         username = user.username
         gender = user.gender.value
         roles = user.roles.map { it.name }
+        cartId = user.cart.id
     }
 }

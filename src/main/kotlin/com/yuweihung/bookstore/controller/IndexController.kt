@@ -3,11 +3,8 @@ package com.yuweihung.bookstore.controller
 import com.yuweihung.bookstore.bean.vo.BookVo
 import com.yuweihung.bookstore.response.Response
 import com.yuweihung.bookstore.service.BookService
-import mu.KotlinLogging
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
-
-private val logger = KotlinLogging.logger { }
 
 /**
  * 首页和搜索相关控制类

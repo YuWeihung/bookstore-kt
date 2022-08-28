@@ -8,8 +8,12 @@ import com.yuweihung.bookstore.repository.OrderRepository
 import com.yuweihung.bookstore.repository.UserRepository
 import com.yuweihung.bookstore.response.ErrorCode
 import com.yuweihung.bookstore.response.ErrorException
+import mu.KotlinLogging
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+
+private val logger = KotlinLogging.logger { }
 
 /**
  * 订单相关的服务类
@@ -22,12 +26,19 @@ class OrderService(
     val itemRepository: ItemRepository,
     val orderRepository: OrderRepository,
 ) {
+    companion object {
+        const val PAGE_SIZE = 10
+    }
+
     /**
      * 提交订单
      */
-    fun submitOrder(userId: Long, cartId: Long): Order {
-        val user = userRepository.findById(userId).orElse(null) ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
-        val cart = cartRepository.findById(cartId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
+    fun submitOrder(username: String): Order {
+        val user = userRepository.findByUsername(username) ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
+        val cart = user.cart
+        if (cart.items.isEmpty()) {
+            throw ErrorException(ErrorCode.CONTENT_IS_EMPTY)
+        }
         val items = mutableSetOf<Item>()
         val cartItems = cart.items.toSet()
         for (item in cartItems) {
@@ -54,12 +65,13 @@ class OrderService(
     /**
      * 获取用户所有订单
      */
-    fun getOrdersByUser(userId: Long): List<Order> {
-        val orders = orderRepository.findByUser_Id(userId)
-        if (orders.isEmpty()) {
+    fun getOrdersByUser(username: String, page: Int = 0): List<Order> {
+        val pageable = PageRequest.of(page, PAGE_SIZE)
+        val orders = orderRepository.findByUser_Username(username, pageable)
+        if (orders.isEmpty) {
             throw ErrorException(ErrorCode.CONTENT_IS_EMPTY)
         } else {
-            return orders
+            return orders.content
         }
     }
 

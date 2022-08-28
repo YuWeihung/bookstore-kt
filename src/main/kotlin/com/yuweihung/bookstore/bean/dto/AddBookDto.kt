@@ -10,11 +10,12 @@ data class AddBookDto(
     val name: String,
     val isbn: String,
     val price: String,
-    @get: Min(0)
+    @get: Min(0, message = "页数不能为负")
     val pageCount: Int,
     val publishYear: Int,
-    @get: Max(12) @get: Min(1)
+    @get: Min(1, message = "月份非法") @get: Max(12, message = "月份非法")
     val publishMonth: Int,
+    @get: Min(0, message = "库存不能为负")
     val inventory: Int,
     val press: String,
     val authors: List<String>,

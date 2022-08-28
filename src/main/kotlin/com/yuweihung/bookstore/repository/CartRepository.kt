@@ -4,7 +4,4 @@ import com.yuweihung.bookstore.bean.entity.Cart
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface CartRepository : JpaRepository<Cart, Long> {
-
-    fun findByUser_Id(id: Long): Cart?
-
 }

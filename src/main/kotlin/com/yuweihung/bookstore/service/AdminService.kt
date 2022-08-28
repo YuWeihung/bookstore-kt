@@ -1,13 +1,12 @@
 package com.yuweihung.bookstore.service
 
 import com.yuweihung.bookstore.bean.dto.AddBookDto
+import com.yuweihung.bookstore.bean.dto.InventoryDto
 import com.yuweihung.bookstore.bean.entity.Author
 import com.yuweihung.bookstore.bean.entity.Book
 import com.yuweihung.bookstore.bean.entity.Press
-import com.yuweihung.bookstore.repository.AuthorRepository
-import com.yuweihung.bookstore.repository.BookRepository
-import com.yuweihung.bookstore.repository.PressRepository
-import com.yuweihung.bookstore.repository.UserRepository
+import com.yuweihung.bookstore.bean.entity.User
+import com.yuweihung.bookstore.repository.*
 import com.yuweihung.bookstore.response.ErrorCode
 import com.yuweihung.bookstore.response.ErrorException
 import org.springframework.stereotype.Service
@@ -19,6 +18,7 @@ import java.time.YearMonth
 @Transactional
 class AdminService(
     val userRepository: UserRepository,
+    val roleRepository: RoleRepository,
     val bookRepository: BookRepository,
     val pressRepository: PressRepository,
     val authorRepository: AuthorRepository,
@@ -53,9 +53,24 @@ class AdminService(
     /**
      * 修改库存
      */
-    fun modifyInventory(bookId: Long, inventory: Int): Book {
-        val book = bookRepository.findById(bookId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
-        book.inventory = inventory
+    fun modifyInventory(inventoryDto: InventoryDto): Book {
+        val book =
+            bookRepository.findById(inventoryDto.bookId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
+        book.inventory = inventoryDto.inventory
         return bookRepository.save(book)
+    }
+
+    /**
+     * 提升用户为管理员
+     */
+    fun elevatePrivilege(username: String): User {
+        val user = userRepository.findByUsername(username) ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
+        val role = roleRepository.findByName("ADMIN") ?: throw ErrorException(ErrorCode.ROLE_NOT_EXIST)
+        if (user.roles.size == 1) {
+            user.roles.add(role)
+        } else {
+            throw ErrorException(ErrorCode.ALREADY_ADMIN)
+        }
+        return userRepository.save(user)
     }
 }
