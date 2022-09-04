@@ -3,7 +3,7 @@ package com.yuweihung.bookstore.controller
 import com.yuweihung.bookstore.bean.dto.ChangePasswordDto
 import com.yuweihung.bookstore.bean.dto.RegisterDto
 import com.yuweihung.bookstore.bean.vo.UserVo
-import com.yuweihung.bookstore.response.Response
+import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.UserService
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid

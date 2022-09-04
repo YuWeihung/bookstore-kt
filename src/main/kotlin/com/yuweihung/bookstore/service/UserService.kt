@@ -5,11 +5,11 @@ import com.yuweihung.bookstore.bean.dto.RegisterDto
 import com.yuweihung.bookstore.bean.entity.Cart
 import com.yuweihung.bookstore.bean.entity.Gender
 import com.yuweihung.bookstore.bean.entity.User
+import com.yuweihung.bookstore.common.ErrorCode
+import com.yuweihung.bookstore.common.ErrorException
 import com.yuweihung.bookstore.repository.CartRepository
 import com.yuweihung.bookstore.repository.RoleRepository
 import com.yuweihung.bookstore.repository.UserRepository
-import com.yuweihung.bookstore.response.ErrorCode
-import com.yuweihung.bookstore.response.ErrorException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -28,22 +28,22 @@ class UserService(
     /**
      * 用户注册
      */
-    fun register(userDto: RegisterDto): User {
-        val count = userRepository.countByUsername(userDto.username)
+    fun register(registerDto: RegisterDto): User {
+        val count = userRepository.countByUsername(registerDto.username)
         if (count > 0) {
             throw ErrorException(ErrorCode.USER_ALREADY_EXIST)
         }
-        val encryptPassword = encoder.encode(userDto.password)
+        val encryptPassword = encoder.encode(registerDto.password)
         val role = roleRepository.findByName("USER")
         val roles = if (role == null) {
             throw ErrorException(ErrorCode.ROLE_NOT_EXIST)
         } else {
             mutableSetOf(role)
         }
-        val gender = if (userDto.gender == "female") Gender.FEMALE else Gender.MALE
+        val gender = if (registerDto.gender == "F") Gender.F else Gender.M
         val cart = Cart()
         cartRepository.save(cart)
-        val user = User(userDto.username, encryptPassword, gender, roles, cart)
+        val user = User(registerDto.username, encryptPassword, gender, roles, cart)
         return userRepository.save(user)
     }
 

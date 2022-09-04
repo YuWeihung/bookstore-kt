@@ -3,10 +3,10 @@ package com.yuweihung.bookstore.bean.vo
 import java.math.BigDecimal
 
 /**
- * 向前端返回的商品项信息
+ * 商品项信息
  */
 class ItemVo(
-    val id: Long?,
+    val bookId: Long?,
     val name: String,
     val price: BigDecimal,
     val amount: Int,

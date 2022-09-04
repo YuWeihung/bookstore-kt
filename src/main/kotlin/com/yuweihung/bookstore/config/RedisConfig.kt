@@ -49,7 +49,7 @@ class RedisConfig(
             .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(template.stringSerializer))
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(template.valueSerializer))
             .disableCachingNullValues()
-            .entryTtl(Duration.ofMinutes(5))
+            .entryTtl(Duration.ofMinutes(10))
     }
 
     override fun keyGenerator(): KeyGenerator? {

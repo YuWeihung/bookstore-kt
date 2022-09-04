@@ -1,8 +1,7 @@
 package com.yuweihung.bookstore.controller
 
-import com.yuweihung.bookstore.response.Response
+import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.TestService
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -26,7 +25,6 @@ class TestController(
         return Response.success("hello, admin")
     }
 
-    @Cacheable("test")
     @GetMapping("/hello")
     fun hello(): Response {
         return Response.success("hello, world")

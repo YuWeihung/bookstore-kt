@@ -50,8 +50,8 @@ class TestService(
         val userCart = Cart()
         cartRepository.save(adminCart)
         cartRepository.save(userCart)
-        val admin = User("admin", encryptPassword, Gender.MALE, adminRoleSet, adminCart)
-        val user = User("abc", encryptPassword, Gender.FEMALE, userRoleSet, userCart)
+        val admin = User("admin", encryptPassword, Gender.M, adminRoleSet, adminCart)
+        val user = User("abc", encryptPassword, Gender.F, userRoleSet, userCart)
         userRepository.save(admin)
         userRepository.save(user)
         logger.info { "init the users" }

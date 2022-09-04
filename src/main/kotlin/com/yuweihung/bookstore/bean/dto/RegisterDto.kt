@@ -11,6 +11,6 @@ data class RegisterDto(
     val username: String,
     @get: Size(min = 6, max = 30, message = "密码长度须为 6-30 字符")
     val password: String,
-    @get: Pattern(regexp = "male|female", message = "性别必须为男或女")
+    @get: Pattern(regexp = "[MF]", message = "性别必须为男或女")
     val gender: String,
 )

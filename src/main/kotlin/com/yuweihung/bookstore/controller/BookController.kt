@@ -1,10 +1,10 @@
 package com.yuweihung.bookstore.controller
 
-import com.yuweihung.bookstore.bean.vo.BookVo
-import com.yuweihung.bookstore.response.Response
+import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.BookService
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 /**
@@ -19,9 +19,8 @@ class BookController(
      */
     @Cacheable("books")
     @GetMapping("/index")
-    fun index(page: Int): Response {
-        val books = bookService.getBooks(page)
-        val result = books.map { BookVo(it) }
+    fun index(@RequestParam(value = "page", defaultValue = "1") page: Int): Response {
+        val result = bookService.getBooks(page)
         return Response.success(result)
     }
 
@@ -30,9 +29,8 @@ class BookController(
      */
     @Cacheable("books")
     @GetMapping("/search/name")
-    fun searchByName(name: String, page: Int): Response {
-        val books = bookService.searchByName(name, page)
-        val result = books.map { BookVo(it) }
+    fun searchByName(name: String, @RequestParam(value = "page", defaultValue = "1") page: Int): Response {
+        val result = bookService.searchByName(name, page)
         return Response.success(result)
     }
 
@@ -41,9 +39,8 @@ class BookController(
      */
     @Cacheable("books")
     @GetMapping("/search/press")
-    fun searchByPress(pressId: Long, page: Int): Response {
-        val books = bookService.searchByPress(pressId, page)
-        val result = books.map { BookVo(it) }
+    fun searchByPress(pressId: Long, @RequestParam(value = "page", defaultValue = "1") page: Int): Response {
+        val result = bookService.searchByPress(pressId, page)
         return Response.success(result)
     }
 
@@ -52,9 +49,8 @@ class BookController(
      */
     @Cacheable("books")
     @GetMapping("/search/author")
-    fun searchByAuthor(authorId: Long, page: Int): Response {
-        val books = bookService.searchByAuthor(authorId, page)
-        val result = books.map { BookVo(it) }
+    fun searchByAuthor(authorId: Long, @RequestParam(value = "page", defaultValue = "1") page: Int): Response {
+        val result = bookService.searchByAuthor(authorId, page)
         return Response.success(result)
     }
 }

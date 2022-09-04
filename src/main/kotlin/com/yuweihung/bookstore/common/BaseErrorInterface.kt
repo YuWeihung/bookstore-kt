@@ -1,4 +1,4 @@
-package com.yuweihung.bookstore.response
+package com.yuweihung.bookstore.common
 
 /**
  * 异常的接口定义

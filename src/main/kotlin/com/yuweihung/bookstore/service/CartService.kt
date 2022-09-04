@@ -3,11 +3,11 @@ package com.yuweihung.bookstore.service
 import com.yuweihung.bookstore.bean.dto.CartDto
 import com.yuweihung.bookstore.bean.entity.Cart
 import com.yuweihung.bookstore.bean.entity.Item
+import com.yuweihung.bookstore.common.ErrorCode
+import com.yuweihung.bookstore.common.ErrorException
 import com.yuweihung.bookstore.repository.BookRepository
 import com.yuweihung.bookstore.repository.CartRepository
 import com.yuweihung.bookstore.repository.ItemRepository
-import com.yuweihung.bookstore.response.ErrorCode
-import com.yuweihung.bookstore.response.ErrorException
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -64,9 +64,8 @@ class CartService(
      */
     fun removeItem(cartDto: CartDto): Cart {
         val cart = cartRepository.findById(cartDto.cartId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
-        val book = bookRepository.findById(cartDto.bookId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
         // 如果购物车中不存在该书籍不允许移除
-        val contains = cart.items.filter { it.book == book }
+        val contains = cart.items.filter { it.book.id == cartDto.bookId }
         if (contains.isEmpty()) {
             throw ErrorException(ErrorCode.CART_ERROR)
         } else {

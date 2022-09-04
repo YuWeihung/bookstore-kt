@@ -1,7 +1,7 @@
 package com.yuweihung.bookstore.config.security
 
-import com.yuweihung.bookstore.response.ErrorCode
-import com.yuweihung.bookstore.response.Response
+import com.yuweihung.bookstore.common.ErrorCode
+import com.yuweihung.bookstore.common.Response
 import mu.KotlinLogging
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.InternalAuthenticationServiceException

@@ -12,12 +12,12 @@ interface BookRepository : JpaRepository<Book, Long> {
 
     fun countByIsbn(isbn: String): Long
 
-    fun findByInventoryGreaterThan(inventory: Int, pageable: Pageable): Page<Book>
+    fun findByInventoryGreaterThanOrderByIdAsc(inventory: Int, pageable: Pageable): Page<Book>
 
-    fun findByPress_IdAndInventoryGreaterThan(id: Long, inventory: Int, pageable: Pageable): Page<Book>
+    fun findByPress_IdAndInventoryGreaterThanOrderByIdAsc(id: Long, inventory: Int, pageable: Pageable): Page<Book>
 
-    fun findByAuthors_IdAndInventoryGreaterThan(id: Long, inventory: Int, pageable: Pageable): Page<Book>
+    fun findByAuthors_IdAndInventoryGreaterThanOrderByIdAsc(id: Long, inventory: Int, pageable: Pageable): Page<Book>
 
-    fun findByNameLikeAndInventoryGreaterThan(name: String, inventory: Int, pageable: Pageable): Page<Book>
+    fun findByNameLikeAndInventoryGreaterThanOrderByIdAsc(name: String, inventory: Int, pageable: Pageable): Page<Book>
 
 }

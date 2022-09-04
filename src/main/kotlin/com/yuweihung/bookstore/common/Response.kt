@@ -1,4 +1,4 @@
-package com.yuweihung.bookstore.response
+package com.yuweihung.bookstore.common
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper

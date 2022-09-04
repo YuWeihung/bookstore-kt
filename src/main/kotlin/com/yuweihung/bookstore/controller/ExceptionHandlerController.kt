@@ -1,8 +1,8 @@
 package com.yuweihung.bookstore.controller
 
-import com.yuweihung.bookstore.response.ErrorCode
-import com.yuweihung.bookstore.response.ErrorException
-import com.yuweihung.bookstore.response.Response
+import com.yuweihung.bookstore.common.ErrorCode
+import com.yuweihung.bookstore.common.ErrorException
+import com.yuweihung.bookstore.common.Response
 import mu.KotlinLogging
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException

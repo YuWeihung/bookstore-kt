@@ -29,5 +29,8 @@ class User(
 ) : BaseEntity() {
 
     @OneToMany(mappedBy = "user")
+    var addresses: MutableSet<Address> = mutableSetOf()
+
+    @OneToMany(mappedBy = "user")
     var orders: MutableSet<Order> = mutableSetOf()
 }

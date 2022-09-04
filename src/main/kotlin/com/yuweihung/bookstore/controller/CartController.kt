@@ -2,7 +2,7 @@ package com.yuweihung.bookstore.controller
 
 import com.yuweihung.bookstore.bean.dto.CartDto
 import com.yuweihung.bookstore.bean.vo.CartVo
-import com.yuweihung.bookstore.response.Response
+import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.CartService
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid

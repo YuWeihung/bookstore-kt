@@ -1,4 +1,4 @@
-package com.yuweihung.bookstore.response
+package com.yuweihung.bookstore.common
 
 /**
  * 异常的错误码的枚举定义
@@ -9,8 +9,9 @@ enum class ErrorCode(override val code: Int, override val message: String) : Bas
     PASSWORD_WRONG(4003, "用户名或密码错误"),
     INVENTORY_NOT_ENOUGH(4004, "商品数量不足"),
     CART_ERROR(4005, "修改购物车错误"),
-    BOOK_ALREADY_EXIST(4006, "书籍已存在"),
-    ALREADY_ADMIN(4007, "该用户已经是管理员"),
+    ORDER_STATUS_ERROR(4006, "订单状态错误"),
+    BOOK_ALREADY_EXIST(4007, "书籍已存在"),
+    ALREADY_ADMIN(4008, "该用户已经是管理员"),
     USER_NOT_LOGIN(4011, "用户未登录"),
     FORBIDDEN(4031, "用户无权访问"),
     USER_NOT_EXIST(4041, "用户名不存在"),

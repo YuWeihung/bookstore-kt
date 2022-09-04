@@ -21,4 +21,12 @@ class Order(
     var items: MutableSet<Item> = mutableSetOf(),
 
     var totalPrice: BigDecimal,
-) : BaseEntity()
+
+    var phoneNumber: String,
+
+    var address: String,
+
+    ) : BaseEntity() {
+
+    var status: OrderStatus = OrderStatus.NOT_PAID
+}

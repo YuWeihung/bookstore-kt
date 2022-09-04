@@ -1,7 +1,7 @@
 package com.yuweihung.bookstore.config.security
 
-import com.yuweihung.bookstore.response.ErrorCode
-import com.yuweihung.bookstore.response.Response
+import com.yuweihung.bookstore.common.ErrorCode
+import com.yuweihung.bookstore.common.Response
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.stereotype.Component

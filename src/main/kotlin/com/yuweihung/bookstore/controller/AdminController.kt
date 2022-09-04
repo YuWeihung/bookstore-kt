@@ -4,7 +4,7 @@ import com.yuweihung.bookstore.bean.dto.BookDto
 import com.yuweihung.bookstore.bean.dto.InventoryDto
 import com.yuweihung.bookstore.bean.vo.BookVo
 import com.yuweihung.bookstore.bean.vo.UserVo
-import com.yuweihung.bookstore.response.Response
+import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.AdminService
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid

@@ -4,10 +4,10 @@ import com.yuweihung.bookstore.bean.entity.Book
 import java.math.BigDecimal
 
 /**
- * 向前端返回的书籍信息
+ * 书籍信息
  */
 class BookVo() {
-    var id: Long? = null
+    var bookId: Long? = null
     var name: String = ""
     var isbn: String = ""
     var price: BigDecimal = BigDecimal("0.00")
@@ -20,7 +20,7 @@ class BookVo() {
     var authors: List<AuthorVo> = listOf()
 
     constructor(book: Book) : this() {
-        id = book.id
+        bookId = book.id
         name = book.name
         isbn = book.isbn
         price = book.price

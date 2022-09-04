@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository
  * 订单的数据库访问接口
  */
 interface OrderRepository : JpaRepository<Order, Long> {
-    fun findByUser_Username(username: String, pageable: Pageable): Page<Order>
+    fun findByUser_UsernameOrderByIdAsc(username: String, pageable: Pageable): Page<Order>
 
 }

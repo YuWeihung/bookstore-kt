@@ -1,11 +1,11 @@
 package com.yuweihung.bookstore.service
 
-import com.yuweihung.bookstore.bean.entity.Book
+import com.yuweihung.bookstore.bean.vo.BookListVo
+import com.yuweihung.bookstore.common.ErrorCode
+import com.yuweihung.bookstore.common.ErrorException
 import com.yuweihung.bookstore.repository.BookRepository
-import com.yuweihung.bookstore.response.ErrorCode
-import com.yuweihung.bookstore.response.ErrorException
+import com.yuweihung.bookstore.util.PageUtil
 import mu.KotlinLogging
-import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,59 +19,55 @@ private val logger = KotlinLogging.logger { }
 class BookService(
     val bookRepository: BookRepository,
 ) {
-    companion object {
-        const val PAGE_SIZE = 10
-    }
-
     /**
      * 分页获取全部书籍
      */
-    fun getBooks(page: Int): List<Book> {
-        val pageable = PageRequest.of(page, PAGE_SIZE)
-        val books = bookRepository.findByInventoryGreaterThan(0, pageable)
+    fun getBooks(page: Int): BookListVo {
+        val pageable = PageUtil.pageRequest(page)
+        val books = bookRepository.findByInventoryGreaterThanOrderByIdAsc(0, pageable)
         if (books.isEmpty) {
             throw ErrorException(ErrorCode.NO_SEARCH_RESULT)
         } else {
-            return books.content
+            return BookListVo(books, page)
         }
     }
 
     /**
      * 根据标题模糊搜索
      */
-    fun searchByName(name: String, page: Int): List<Book> {
-        val pageable = PageRequest.of(page, PAGE_SIZE)
-        val books = bookRepository.findByNameLikeAndInventoryGreaterThan("%$name%", 0, pageable)
+    fun searchByName(name: String, page: Int): BookListVo {
+        val pageable = PageUtil.pageRequest(page)
+        val books = bookRepository.findByNameLikeAndInventoryGreaterThanOrderByIdAsc("%$name%", 0, pageable)
         if (books.isEmpty) {
             throw ErrorException(ErrorCode.NO_SEARCH_RESULT)
         } else {
-            return books.content
+            return BookListVo(books, page)
         }
     }
 
     /**
      * 根据出版社搜索
      */
-    fun searchByPress(pressId: Long, page: Int): List<Book> {
-        val pageable = PageRequest.of(page, PAGE_SIZE)
-        val books = bookRepository.findByPress_IdAndInventoryGreaterThan(pressId, 0, pageable)
+    fun searchByPress(pressId: Long, page: Int): BookListVo {
+        val pageable = PageUtil.pageRequest(page)
+        val books = bookRepository.findByPress_IdAndInventoryGreaterThanOrderByIdAsc(pressId, 0, pageable)
         if (books.isEmpty) {
             throw ErrorException(ErrorCode.NO_SEARCH_RESULT)
         } else {
-            return books.content
+            return BookListVo(books, page)
         }
     }
 
     /**
      * 根据作者搜索
      */
-    fun searchByAuthor(authorId: Long, page: Int): List<Book> {
-        val pageable = PageRequest.of(page, PAGE_SIZE)
-        val books = bookRepository.findByAuthors_IdAndInventoryGreaterThan(authorId, 0, pageable)
+    fun searchByAuthor(authorId: Long, page: Int): BookListVo {
+        val pageable = PageUtil.pageRequest(page)
+        val books = bookRepository.findByAuthors_IdAndInventoryGreaterThanOrderByIdAsc(authorId, 0, pageable)
         if (books.isEmpty) {
             throw ErrorException(ErrorCode.NO_SEARCH_RESULT)
         } else {
-            return books.content
+            return BookListVo(books, page)
         }
     }
 
