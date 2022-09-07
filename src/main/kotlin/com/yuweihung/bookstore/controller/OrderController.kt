@@ -1,7 +1,6 @@
 package com.yuweihung.bookstore.controller
 
 import com.yuweihung.bookstore.bean.dto.OrderDto
-import com.yuweihung.bookstore.bean.vo.OrderVo
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.OrderService
 import org.springframework.web.bind.annotation.*
@@ -20,8 +19,7 @@ class OrderController(
      */
     @PostMapping("/submit")
     fun submitOrder(@Valid @RequestBody orderDto: OrderDto): Response {
-        val order = orderService.submitOrder(orderDto)
-        val result = OrderVo(order)
+        val result = orderService.submitOrder(orderDto)
         return Response.success(result)
     }
 
@@ -30,8 +28,7 @@ class OrderController(
      */
     @GetMapping("/{id}")
     fun getOrder(@PathVariable("id") orderId: Long): Response {
-        val order = orderService.getOrderDetail(orderId)
-        val result = OrderVo(order)
+        val result = orderService.getOrderDetail(orderId)
         return Response.success(result)
     }
 
@@ -49,8 +46,7 @@ class OrderController(
      */
     @PostMapping("/pay/{orderId}")
     fun payOrder(@PathVariable("orderId") orderId: Long): Response {
-        val order = orderService.payOrder(orderId)
-        val result = OrderVo(order)
+        val result = orderService.payOrder(orderId)
         return Response.success(result)
     }
 
@@ -59,8 +55,7 @@ class OrderController(
      */
     @PostMapping("/complete/{orderId}")
     fun completeOrder(@PathVariable("orderId") orderId: Long): Response {
-        val order = orderService.completeOrder(orderId)
-        val result = OrderVo(order)
+        val result = orderService.completeOrder(orderId)
         return Response.success(result)
     }
 
@@ -69,8 +64,7 @@ class OrderController(
      */
     @PostMapping("/cancel/{orderId}")
     fun cancelOrder(@PathVariable("orderId") orderId: Long): Response {
-        val order = orderService.cancelOrder(orderId)
-        val result = OrderVo(order)
+        val result = orderService.cancelOrder(orderId)
         return Response.success(result)
     }
 }

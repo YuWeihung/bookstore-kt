@@ -1,7 +1,6 @@
 package com.yuweihung.bookstore.bean.entity
 
 import javax.persistence.Entity
-import javax.persistence.FetchType
 import javax.persistence.ManyToMany
 import javax.persistence.Table
 
@@ -14,6 +13,6 @@ class Role(
     var name: String,
 ) : BaseEntity() {
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roles")
     var users: MutableSet<User> = mutableSetOf()
 }

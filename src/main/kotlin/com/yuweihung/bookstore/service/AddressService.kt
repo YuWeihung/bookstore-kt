@@ -2,7 +2,7 @@ package com.yuweihung.bookstore.service
 
 import com.yuweihung.bookstore.bean.dto.AddressDto
 import com.yuweihung.bookstore.bean.entity.Address
-import com.yuweihung.bookstore.bean.entity.User
+import com.yuweihung.bookstore.bean.vo.UserVo
 import com.yuweihung.bookstore.common.ErrorCode
 import com.yuweihung.bookstore.common.ErrorException
 import com.yuweihung.bookstore.repository.AddressRepository
@@ -23,17 +23,17 @@ class AddressService(
     /**
      * 添加收货地址
      */
-    fun addAddress(addressDto: AddressDto): User {
+    fun addAddress(addressDto: AddressDto): UserVo {
         val user = userRepository.findByUsername(addressDto.username) ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
         val address = Address(addressDto.phoneNumber, addressDto.address, user)
         addressRepository.save(address)
-        return user
+        return UserVo(user)
     }
 
     /**
      * 修改收货地址
      */
-    fun modifyAddress(addressDto: AddressDto): User {
+    fun modifyAddress(addressDto: AddressDto): UserVo {
         val user = userRepository.findByUsername(addressDto.username) ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
         val addressList = user.addresses.filter { it.id == addressDto.addressId }
         if (addressList.isEmpty()) {
@@ -43,13 +43,13 @@ class AddressService(
         address.phoneNumber = addressDto.phoneNumber
         address.address = addressDto.address
         addressRepository.save(address)
-        return user
+        return UserVo(user)
     }
 
     /**
      * 删除收货地址
      */
-    fun removeAddress(addressDto: AddressDto): User {
+    fun removeAddress(addressDto: AddressDto): UserVo {
         val user = userRepository.findByUsername(addressDto.username) ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
         val addressList = user.addresses.filter { it.id == addressDto.addressId }
         if (addressList.isEmpty()) {
@@ -58,6 +58,6 @@ class AddressService(
         val address = addressList[0]
         user.addresses.remove(address)
         addressRepository.delete(address)
-        return user
+        return UserVo(user)
     }
 }

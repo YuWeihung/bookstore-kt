@@ -2,7 +2,6 @@ package com.yuweihung.bookstore.controller
 
 import com.yuweihung.bookstore.bean.dto.ChangePasswordDto
 import com.yuweihung.bookstore.bean.dto.RegisterDto
-import com.yuweihung.bookstore.bean.vo.UserVo
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.UserService
 import org.springframework.web.bind.annotation.*
@@ -20,8 +19,7 @@ class UserController(
      */
     @PostMapping("/register")
     fun register(@Valid @RequestBody registerDto: RegisterDto): Response {
-        val user = userService.register(registerDto)
-        val result = UserVo(user)
+        val result = userService.register(registerDto)
         return Response.success(result)
     }
 
@@ -30,8 +28,7 @@ class UserController(
      */
     @PostMapping("/change-password")
     fun changePassword(@Valid @RequestBody changePasswordDto: ChangePasswordDto): Response {
-        val user = userService.changePassword(changePasswordDto)
-        val result = UserVo(user)
+        val result = userService.changePassword(changePasswordDto)
         return Response.success(result)
     }
 
@@ -40,8 +37,7 @@ class UserController(
      */
     @GetMapping("/user/{username}")
     fun getUser(@PathVariable("username") username: String): Response {
-        val user = userService.getUser(username)
-        val result = UserVo(user)
+        val result = userService.getUser(username)
         return Response.success(result)
     }
 

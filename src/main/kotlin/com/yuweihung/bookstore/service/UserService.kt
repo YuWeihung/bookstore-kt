@@ -5,6 +5,7 @@ import com.yuweihung.bookstore.bean.dto.RegisterDto
 import com.yuweihung.bookstore.bean.entity.Cart
 import com.yuweihung.bookstore.bean.entity.Gender
 import com.yuweihung.bookstore.bean.entity.User
+import com.yuweihung.bookstore.bean.vo.UserVo
 import com.yuweihung.bookstore.common.ErrorCode
 import com.yuweihung.bookstore.common.ErrorException
 import com.yuweihung.bookstore.repository.CartRepository
@@ -28,7 +29,7 @@ class UserService(
     /**
      * 用户注册
      */
-    fun register(registerDto: RegisterDto): User {
+    fun register(registerDto: RegisterDto): UserVo {
         val count = userRepository.countByUsername(registerDto.username)
         if (count > 0) {
             throw ErrorException(ErrorCode.USER_ALREADY_EXIST)
@@ -44,13 +45,14 @@ class UserService(
         val cart = Cart()
         cartRepository.save(cart)
         val user = User(registerDto.username, encryptPassword, gender, roles, cart)
-        return userRepository.save(user)
+        val result = userRepository.save(user)
+        return UserVo(result)
     }
 
     /**
      * 更改密码
      */
-    fun changePassword(changePasswordDto: ChangePasswordDto): User {
+    fun changePassword(changePasswordDto: ChangePasswordDto): UserVo {
         val user = userRepository.findByUsername(changePasswordDto.username)
         if (user == null) {
             throw ErrorException(ErrorCode.USER_NOT_EXIST)
@@ -59,16 +61,17 @@ class UserService(
         } else {
             val encryptPassword = encoder.encode(changePasswordDto.newPassword)
             user.password = encryptPassword
-            return userRepository.save(user)
+            val result = userRepository.save(user)
+            return UserVo(result)
         }
     }
 
     /**
      * 获取指定用户信息
      */
-    fun getUser(username: String): User {
+    fun getUser(username: String): UserVo {
         val user = userRepository.findByUsername(username)
-        return user ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
+        return user?.let { UserVo(it) } ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
     }
 
 }

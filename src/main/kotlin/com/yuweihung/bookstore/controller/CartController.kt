@@ -1,7 +1,6 @@
 package com.yuweihung.bookstore.controller
 
 import com.yuweihung.bookstore.bean.dto.CartDto
-import com.yuweihung.bookstore.bean.vo.CartVo
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.CartService
 import org.springframework.web.bind.annotation.*
@@ -20,8 +19,7 @@ class CartController(
      */
     @GetMapping("/{id}")
     fun getCart(@PathVariable("id") cartId: Long): Response {
-        val cart = cartService.getCart(cartId)
-        val result = CartVo(cart)
+        val result = cartService.getCart(cartId)
         return Response.success(result)
     }
 
@@ -30,8 +28,7 @@ class CartController(
      */
     @PostMapping("/add")
     fun addItem(@Valid @RequestBody cartDto: CartDto): Response {
-        val cart = cartService.addItem(cartDto)
-        val result = CartVo(cart)
+        val result = cartService.addItem(cartDto)
         return Response.success(result)
     }
 
@@ -40,8 +37,7 @@ class CartController(
      */
     @PostMapping("/remove")
     fun removeItem(@Valid @RequestBody cartDto: CartDto): Response {
-        val cart = cartService.removeItem(cartDto)
-        val result = CartVo(cart)
+        val result = cartService.removeItem(cartDto)
         return Response.success(result)
     }
 
@@ -50,8 +46,7 @@ class CartController(
      */
     @PostMapping("/modify")
     fun modifyItem(@Valid @RequestBody cartDto: CartDto): Response {
-        val cart = cartService.modifyItem(cartDto)
-        val result = CartVo(cart)
+        val result = cartService.modifyItem(cartDto)
         return Response.success(result)
     }
 }

@@ -18,27 +18,17 @@ class Response(
         /**
          * 成功返回 0 和数据（如存在）
          */
-        fun success(): Response {
-            return Response()
-        }
-
-        fun success(data: Any): Response {
-            return Response(data = data)
-        }
+        fun success(data: Any? = null) = Response(data = data)
 
         /**
          * 失败返回错误码和错误信息
          */
-        fun failure(errorCode: BaseErrorInterface): Response {
-            return Response(code = errorCode.code, message = errorCode.message)
-        }
+        fun failure(errorCode: BaseErrorInterface) = Response(code = errorCode.code, message = errorCode.message)
 
         /**
          * 参数校验错误
          */
-        fun paramNotValid(message: String): Response {
-            return Response(code = ErrorCode.PARAM_NOT_VALID.code, message = message)
-        }
+        fun paramNotValid(message: String) = Response(code = ErrorCode.PARAM_NOT_VALID.code, message = message)
 
         /**
          * 直接修改 HttpServletResponse 的封装

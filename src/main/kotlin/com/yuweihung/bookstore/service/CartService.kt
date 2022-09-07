@@ -1,8 +1,8 @@
 package com.yuweihung.bookstore.service
 
 import com.yuweihung.bookstore.bean.dto.CartDto
-import com.yuweihung.bookstore.bean.entity.Cart
 import com.yuweihung.bookstore.bean.entity.Item
+import com.yuweihung.bookstore.bean.vo.CartVo
 import com.yuweihung.bookstore.common.ErrorCode
 import com.yuweihung.bookstore.common.ErrorException
 import com.yuweihung.bookstore.repository.BookRepository
@@ -27,19 +27,19 @@ class CartService(
     /**
      * 获取用户购物车内容
      */
-    fun getCart(cartId: Long): Cart {
+    fun getCart(cartId: Long): CartVo {
         val cart = cartRepository.findById(cartId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
         if (cart.items.isEmpty()) {
             throw ErrorException(ErrorCode.CONTENT_IS_EMPTY)
         } else {
-            return cart
+            return CartVo(cart)
         }
     }
 
     /**
      * 向购物车中添加项
      */
-    fun addItem(cartDto: CartDto): Cart {
+    fun addItem(cartDto: CartDto): CartVo {
         val book = bookRepository.findById(cartDto.bookId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
         // 数量不足不能购买
         if (book.inventory < cartDto.amount) {
@@ -53,7 +53,8 @@ class CartService(
         if (count == 0) {
             cart.items.add(item)
             cart.calculatePrice()
-            return cartRepository.save(cart)
+            val result = cartRepository.save(cart)
+            return CartVo(result)
         } else {
             throw ErrorException(ErrorCode.CART_ERROR)
         }
@@ -62,7 +63,7 @@ class CartService(
     /**
      * 从购物车中移除商品
      */
-    fun removeItem(cartDto: CartDto): Cart {
+    fun removeItem(cartDto: CartDto): CartVo {
         val cart = cartRepository.findById(cartDto.cartId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
         // 如果购物车中不存在该书籍不允许移除
         val contains = cart.items.filter { it.book.id == cartDto.bookId }
@@ -73,14 +74,15 @@ class CartService(
             cart.items.remove(item)
             itemRepository.delete(item)
             cart.calculatePrice()
-            return cartRepository.save(cart)
+            val result = cartRepository.save(cart)
+            return CartVo(result)
         }
     }
 
     /**
      * 修改购物车中商品数量
      */
-    fun modifyItem(cartDto: CartDto): Cart {
+    fun modifyItem(cartDto: CartDto): CartVo {
         val cart = cartRepository.findById(cartDto.cartId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
         val book = bookRepository.findById(cartDto.bookId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
         // 数量不足不能购买
@@ -96,7 +98,8 @@ class CartService(
             item.amount = cartDto.amount
             itemRepository.save(item)
             cart.calculatePrice()
-            return cartRepository.save(cart)
+            val result = cartRepository.save(cart)
+            return CartVo(result)
         }
     }
 

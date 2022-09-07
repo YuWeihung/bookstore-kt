@@ -1,11 +1,13 @@
 package com.yuweihung.bookstore.config
 
+import com.yuweihung.bookstore.common.Constant
 import com.yuweihung.bookstore.config.redis.CustomKeyGenerator
 import org.springframework.cache.annotation.CachingConfigurerSupport
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.interceptor.KeyGenerator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.data.redis.cache.RedisCacheConfiguration
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
@@ -18,6 +20,7 @@ import java.time.Duration
  * Redis 配置类
  */
 @EnableCaching
+@EnableJpaAuditing
 @Configuration
 class RedisConfig(
     val keyGenerator: CustomKeyGenerator,
@@ -49,7 +52,7 @@ class RedisConfig(
             .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(template.stringSerializer))
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(template.valueSerializer))
             .disableCachingNullValues()
-            .entryTtl(Duration.ofMinutes(10))
+            .entryTtl(Duration.ofMinutes(Constant.CACHE_EXPIRATION_TIME))
     }
 
     override fun keyGenerator(): KeyGenerator? {

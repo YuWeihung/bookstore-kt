@@ -5,14 +5,16 @@ import com.yuweihung.bookstore.bean.entity.Item
 import com.yuweihung.bookstore.bean.entity.Order
 import com.yuweihung.bookstore.bean.entity.OrderStatus
 import com.yuweihung.bookstore.bean.vo.OrderListVo
+import com.yuweihung.bookstore.bean.vo.OrderVo
+import com.yuweihung.bookstore.common.Constant
 import com.yuweihung.bookstore.common.ErrorCode
 import com.yuweihung.bookstore.common.ErrorException
 import com.yuweihung.bookstore.repository.CartRepository
 import com.yuweihung.bookstore.repository.ItemRepository
 import com.yuweihung.bookstore.repository.OrderRepository
 import com.yuweihung.bookstore.repository.UserRepository
-import com.yuweihung.bookstore.util.PageUtil
 import mu.KotlinLogging
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -33,7 +35,7 @@ class OrderService(
     /**
      * 提交订单
      */
-    fun submitOrder(orderDto: OrderDto): Order {
+    fun submitOrder(orderDto: OrderDto): OrderVo {
         val user = userRepository.findByUsername(orderDto.username) ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
         val cart = user.cart
         if (cart.items.isEmpty()) {
@@ -59,14 +61,15 @@ class OrderService(
         }
         cart.calculatePrice()
         cartRepository.save(cart)
-        return orderRepository.save(order)
+        val result = orderRepository.save(order)
+        return OrderVo(result)
     }
 
     /**
      * 获取用户所有订单
      */
     fun getOrdersByUser(username: String, page: Int): OrderListVo {
-        val pageable = PageUtil.pageRequest(page)
+        val pageable = PageRequest.of(page - 1, Constant.PAGE_SIZE)
         val orders = orderRepository.findByUser_UsernameOrderByIdAsc(username, pageable)
         if (orders.isEmpty) {
             throw ErrorException(ErrorCode.CONTENT_IS_EMPTY)
@@ -78,40 +81,43 @@ class OrderService(
     /**
      * 获取订单详情
      */
-    fun getOrderDetail(orderId: Long): Order {
-        return orderRepository.findById(orderId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
+    fun getOrderDetail(orderId: Long): OrderVo {
+        val result = orderRepository.findById(orderId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
+        return OrderVo(result)
     }
 
     /**
      * 订单支付
      */
-    fun payOrder(orderId: Long): Order {
+    fun payOrder(orderId: Long): OrderVo {
         val order = orderRepository.findById(orderId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
         if (order.status == OrderStatus.NOT_PAID) {
             order.status = OrderStatus.NOT_DELIVERED
         } else {
             throw ErrorException(ErrorCode.ORDER_STATUS_ERROR)
         }
-        return orderRepository.save(order)
+        val result = orderRepository.save(order)
+        return OrderVo(result)
     }
 
     /**
      * 订单确认收货
      */
-    fun completeOrder(orderId: Long): Order {
+    fun completeOrder(orderId: Long): OrderVo {
         val order = orderRepository.findById(orderId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
         if (order.status == OrderStatus.NOT_DELIVERED) {
             order.status = OrderStatus.COMPLETED
         } else {
             throw ErrorException(ErrorCode.ORDER_STATUS_ERROR)
         }
-        return orderRepository.save(order)
+        val result = orderRepository.save(order)
+        return OrderVo(result)
     }
 
     /**
      * 取消订单
      */
-    fun cancelOrder(orderId: Long): Order {
+    fun cancelOrder(orderId: Long): OrderVo {
         val order = orderRepository.findById(orderId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
         /**
          * 将订单内书籍加回库存
@@ -125,6 +131,7 @@ class OrderService(
         } else {
             throw ErrorException(ErrorCode.ORDER_STATUS_ERROR)
         }
-        return orderRepository.save(order)
+        val result = orderRepository.save(order)
+        return OrderVo(result)
     }
 }
