@@ -5,7 +5,7 @@ import java.math.BigDecimal
 /**
  * 商品项信息
  */
-class ItemVo(
+data class ItemVo(
     val bookId: Long?,
     val name: String,
     val price: BigDecimal,

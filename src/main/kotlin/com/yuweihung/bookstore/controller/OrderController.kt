@@ -1,6 +1,7 @@
 package com.yuweihung.bookstore.controller
 
-import com.yuweihung.bookstore.bean.dto.OrderDto
+import com.yuweihung.bookstore.bean.dto.BuyBookDto
+import com.yuweihung.bookstore.bean.dto.CheckoutDto
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.OrderService
 import org.springframework.web.bind.annotation.*
@@ -15,11 +16,20 @@ class OrderController(
     val orderService: OrderService,
 ) {
     /**
-     * 提交订单
+     * 直接购买商品
      */
-    @PostMapping("/submit")
-    fun submitOrder(@Valid @RequestBody orderDto: OrderDto): Response {
-        val result = orderService.submitOrder(orderDto)
+    @PostMapping("/buy-book")
+    fun buyBook(@Valid @RequestBody buyBookDto: BuyBookDto): Response {
+        val result = orderService.buyBook(buyBookDto)
+        return Response.success(result)
+    }
+
+    /**
+     * 从购物车中提交订单
+     */
+    @PostMapping("/checkout-cart")
+    fun checkoutCart(@Valid @RequestBody checkoutDto: CheckoutDto): Response {
+        val result = orderService.checkoutCart(checkoutDto)
         return Response.success(result)
     }
 

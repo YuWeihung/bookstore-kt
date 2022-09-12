@@ -10,6 +10,7 @@ import java.time.LocalDateTime
  */
 class OrderVo() {
     var orderId: Long? = null
+    var username: String = ""
     var books: List<ItemVo> = listOf()
     var totalPrice: BigDecimal = BigDecimal("0.00")
     var phoneNumber: String = ""
@@ -21,6 +22,7 @@ class OrderVo() {
 
     constructor(order: Order) : this() {
         orderId = order.id
+        username = order.user.username
         books = order.items.map { ItemVo(it.book.id, it.book.name, it.book.price, it.amount) }
         totalPrice = order.totalPrice
         createTime = order.createdTime

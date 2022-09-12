@@ -1,6 +1,7 @@
 package com.yuweihung.bookstore.service
 
-import com.yuweihung.bookstore.bean.dto.OrderDto
+import com.yuweihung.bookstore.bean.dto.BuyBookDto
+import com.yuweihung.bookstore.bean.dto.CheckoutDto
 import com.yuweihung.bookstore.bean.entity.Item
 import com.yuweihung.bookstore.bean.entity.Order
 import com.yuweihung.bookstore.bean.entity.OrderStatus
@@ -9,10 +10,7 @@ import com.yuweihung.bookstore.bean.vo.OrderVo
 import com.yuweihung.bookstore.common.Constant
 import com.yuweihung.bookstore.common.ErrorCode
 import com.yuweihung.bookstore.common.ErrorException
-import com.yuweihung.bookstore.repository.CartRepository
-import com.yuweihung.bookstore.repository.ItemRepository
-import com.yuweihung.bookstore.repository.OrderRepository
-import com.yuweihung.bookstore.repository.UserRepository
+import com.yuweihung.bookstore.repository.*
 import mu.KotlinLogging
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
@@ -27,16 +25,31 @@ private val logger = KotlinLogging.logger { }
 @Transactional
 class OrderService(
     val userRepository: UserRepository,
+    val bookRepository: BookRepository,
     val cartRepository: CartRepository,
     val itemRepository: ItemRepository,
     val orderRepository: OrderRepository,
 ) {
+    /**
+     * 直接购买商品
+     */
+    fun buyBook(buyBookDto: BuyBookDto): OrderVo {
+        val user = userRepository.findByUsername(buyBookDto.username) ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
+        val book =
+            bookRepository.findById(buyBookDto.bookId).orElse(null) ?: throw ErrorException(ErrorCode.NO_SUCH_ITEM)
+        val item = Item(book, 1)
+        val price = book.price
+        itemRepository.save(item)
+        val order = Order(user, mutableSetOf(item), price, buyBookDto.phoneNumber, buyBookDto.address)
+        val result = orderRepository.save(order)
+        return OrderVo(result)
+    }
 
     /**
-     * 提交订单
+     * 结算购物车提交订单
      */
-    fun submitOrder(orderDto: OrderDto): OrderVo {
-        val user = userRepository.findByUsername(orderDto.username) ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
+    fun checkoutCart(checkoutDto: CheckoutDto): OrderVo {
+        val user = userRepository.findByUsername(checkoutDto.username) ?: throw ErrorException(ErrorCode.USER_NOT_EXIST)
         val cart = user.cart
         if (cart.items.isEmpty()) {
             throw ErrorException(ErrorCode.CONTENT_IS_EMPTY)
@@ -51,7 +64,7 @@ class OrderService(
             itemRepository.save(orderItem)
             items.add(orderItem)
         }
-        val order = Order(user, items, cart.totalPrice, orderDto.phoneNumber, orderDto.address)
+        val order = Order(user, items, cart.totalPrice, checkoutDto.phoneNumber, checkoutDto.address)
         // 清空购物车，并减少商品库存
         for (item in cartItems) {
             item.book.inventory -= item.amount
