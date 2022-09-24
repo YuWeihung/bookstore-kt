@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse
  * HTTP 响应的格式定义和封装
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-class Response(
+class Response private constructor(
     val code: Int = 0,
     val message: String = "success",
     val data: Any? = null,

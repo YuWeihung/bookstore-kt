@@ -18,7 +18,7 @@ class OrderController(
     /**
      * 直接购买商品
      */
-    @PostMapping("/buy-book")
+    @PostMapping("/book")
     fun buyBook(@Valid @RequestBody buyBookDto: BuyBookDto): Response {
         val result = orderService.buyBook(buyBookDto)
         return Response.success(result)
@@ -27,7 +27,7 @@ class OrderController(
     /**
      * 从购物车中提交订单
      */
-    @PostMapping("/checkout-cart")
+    @PostMapping("/cart")
     fun checkoutCart(@Valid @RequestBody checkoutDto: CheckoutDto): Response {
         val result = orderService.checkoutCart(checkoutDto)
         return Response.success(result)

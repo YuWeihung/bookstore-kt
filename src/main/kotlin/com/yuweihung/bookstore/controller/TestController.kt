@@ -29,4 +29,10 @@ class TestController(
     fun hello(): Response {
         return Response.success("hello, world")
     }
+
+//    @GetMapping("/test")
+//    fun test(): Response {
+//        return Response.success()
+//    }
+
 }
