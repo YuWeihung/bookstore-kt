@@ -20,6 +20,7 @@ class Cart : BaseEntity() {
     )
     var items: MutableSet<Item> = mutableSetOf()
 
+    @Column(name = "total_price", nullable = false)
     var totalPrice: BigDecimal = BigDecimal("0.00")
 
     /**

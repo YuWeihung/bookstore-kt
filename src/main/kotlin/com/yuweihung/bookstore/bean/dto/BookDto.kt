@@ -11,7 +11,7 @@ data class BookDto(
     val isbn: String,
     val price: String,
     @get: Min(0, message = "页数不能为负")
-    val pageCount: Int,
+    val page: Int,
     val publishYear: Int,
     @get: Min(1, message = "月份非法") @get: Max(12, message = "月份非法")
     val publishMonth: Int,

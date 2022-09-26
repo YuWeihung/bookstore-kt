@@ -52,7 +52,7 @@ class AdminService(
         val price = BigDecimal(bookDto.price)
         val publishDate = YearMonth.of(bookDto.publishYear, bookDto.publishMonth)
         val book = Book(
-            bookDto.name, bookDto.isbn, price, bookDto.pageCount,
+            bookDto.name, bookDto.isbn, price, bookDto.page,
             publishDate, bookDto.inventory, press, authorSet
         )
         val result = bookRepository.save(book)

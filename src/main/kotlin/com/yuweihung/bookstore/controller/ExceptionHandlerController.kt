@@ -46,12 +46,12 @@ class ExceptionHandlerController {
      */
     @ExceptionHandler(ConstraintViolationException::class)
     fun handlePathParamException(e: ConstraintViolationException): Response {
-        val msg = e.message
+        val msg = e.message?.split(": ")
         logger.info { "参数校验异常: $msg" }
         val response = if (msg == null) {
             Response.failure(ErrorCode.PARAM_NOT_VALID)
         } else {
-            Response.paramNotValid(msg)
+            Response.paramNotValid(msg[1])
         }
         return response
     }

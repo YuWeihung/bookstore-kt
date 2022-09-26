@@ -20,13 +20,17 @@ class Order(
     )
     var items: MutableSet<Item> = mutableSetOf(),
 
+    @Column(name = "total_price", nullable = false)
     var totalPrice: BigDecimal,
 
+    @Column(name = "phone_number", nullable = false)
     var phoneNumber: String,
 
+    @Column(name = "address", nullable = false)
     var address: String,
 
     ) : BaseEntity() {
 
+    @Column(name = "status", nullable = false)
     var status: OrderStatus = OrderStatus.NOT_PAID
 }

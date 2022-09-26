@@ -1,5 +1,6 @@
 package com.yuweihung.bookstore.bean.entity
 
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.OneToMany
 import javax.persistence.Table
@@ -10,6 +11,7 @@ import javax.persistence.Table
 @Entity
 @Table(name = "press")
 class Press(
+    @Column(name = "name", nullable = false)
     var name: String,
 ) : BaseEntity() {
 

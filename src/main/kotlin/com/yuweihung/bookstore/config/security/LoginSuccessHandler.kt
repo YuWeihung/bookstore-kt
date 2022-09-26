@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 /**
- * 登录成功返回响应
+ * 登录成功返回角色权限
  */
 @Component
 class LoginSuccessHandler : AuthenticationSuccessHandler {
@@ -17,6 +17,10 @@ class LoginSuccessHandler : AuthenticationSuccessHandler {
         response: HttpServletResponse?,
         authentication: Authentication?,
     ) {
-        response?.let { Response.render(it, Response.success()) }
+        if (response != null && authentication != null) {
+            val roles = authentication.authorities.map { it.authority.toString() }
+            val role: String = if (roles.contains("ROLE_ADMIN")) "admin" else "user"
+            Response.render(response, Response.success(role))
+        }
     }
 }

@@ -11,7 +11,7 @@ class BookVo() {
     var name: String = ""
     var isbn: String = ""
     var price: BigDecimal = BigDecimal("0.00")
-    var pageCount: Int = 0
+    var page: Int = 0
     var publishYear: Int = 0
     var publishMonth: Int = 0
     var inventory: Int = 0
@@ -24,7 +24,7 @@ class BookVo() {
         name = book.name
         isbn = book.isbn
         price = book.price
-        pageCount = book.pageCount
+        page = book.page
         publishYear = book.publishDate.year
         publishMonth = book.publishDate.monthValue
         inventory = book.inventory

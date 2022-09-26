@@ -1,5 +1,6 @@
 package com.yuweihung.bookstore.bean.entity
 
+import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.ManyToMany
 import javax.persistence.Table
@@ -10,6 +11,7 @@ import javax.persistence.Table
 @Entity
 @Table(name = "author")
 class Author(
+    @Column(name = "name", nullable = false)
     var name: String,
 ) : BaseEntity() {
 

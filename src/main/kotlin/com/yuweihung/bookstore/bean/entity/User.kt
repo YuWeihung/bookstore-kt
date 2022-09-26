@@ -11,10 +11,13 @@ import javax.persistence.*
     indexes = [Index(name = "uni_username", columnList = "username", unique = true)]
 )
 class User(
+    @Column(name = "username", nullable = false)
     var username: String,
 
+    @Column(name = "password", nullable = false)
     var password: String,
 
+    @Column(name = "gender", nullable = false)
     var gender: Gender,
 
     @ManyToMany(fetch = FetchType.EAGER)

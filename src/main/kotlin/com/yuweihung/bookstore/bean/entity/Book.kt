@@ -11,20 +11,27 @@ import javax.persistence.*
 @Table(
     name = "book",
     indexes = [
-        Index(name = "uni_isbn", columnList = "isbn", unique = true)
+        Index(name = "idx_name", columnList = "name", unique = false),
+        Index(name = "uni_isbn", columnList = "isbn", unique = true),
     ]
 )
 class Book(
+    @Column(name = "name", nullable = false)
     var name: String,
 
+    @Column(name = "isbn", nullable = false)
     var isbn: String,
 
+    @Column(name = "price", nullable = false)
     var price: BigDecimal,
 
-    var pageCount: Int,
+    @Column(name = "page", nullable = false)
+    var page: Int,
 
+    @Column(name = "publish_date", nullable = false)
     var publishDate: YearMonth,
 
+    @Column(name = "inventory", nullable = false)
     var inventory: Int,
 
     @ManyToOne

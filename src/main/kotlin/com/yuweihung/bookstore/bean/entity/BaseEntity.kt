@@ -19,8 +19,10 @@ class BaseEntity {
     var id: Long? = null
 
     @CreatedDate
+    @Column(name = "created_time", nullable = false)
     var createdTime: LocalDateTime? = null
 
     @LastModifiedDate
+    @Column(name = "modified_time", nullable = false)
     var modifiedTime: LocalDateTime? = null
 }

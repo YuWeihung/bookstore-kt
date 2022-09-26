@@ -39,7 +39,7 @@ class BookService(
      */
     fun searchByName(name: String, page: Int): BookListVo {
         val pageable = PageRequest.of(page - 1, Constant.PAGE_SIZE)
-        val books = bookRepository.findByNameLikeAndInventoryGreaterThanOrderByIdAsc("%$name%", 0, pageable)
+        val books = bookRepository.findByNameLikeAndInventoryGreaterThanOrderByIdAsc("$name%", 0, pageable)
         if (books.isEmpty) {
             throw ErrorException(ErrorCode.NO_SEARCH_RESULT)
         } else {
