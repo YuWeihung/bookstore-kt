@@ -1,15 +1,17 @@
 package com.yuweihung.bookstore.bean.entity
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.ManyToMany
-import javax.persistence.Table
+import javax.persistence.*
 
 /**
  * 作者实体类
  */
 @Entity
-@Table(name = "author")
+@Table(
+    name = "author",
+    indexes = [
+        Index(name = "uni_name", columnList = "name", unique = true),
+    ]
+)
 class Author(
     @Column(name = "name", nullable = false)
     var name: String,

@@ -9,6 +9,6 @@ class Constant {
         const val PAGE_SIZE = 10
 
         // redis 缓存时间
-        const val CACHE_EXPIRATION_TIME = 10L
+        const val CACHE_EXPIRATION_TIME = 5L
     }
 }

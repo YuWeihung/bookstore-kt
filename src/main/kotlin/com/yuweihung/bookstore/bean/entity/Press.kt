@@ -1,15 +1,17 @@
 package com.yuweihung.bookstore.bean.entity
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.OneToMany
-import javax.persistence.Table
+import javax.persistence.*
 
 /**
  * 出版社实体类
  */
 @Entity
-@Table(name = "press")
+@Table(
+    name = "press",
+    indexes = [
+        Index(name = "uni_name", columnList = "name", unique = true),
+    ]
+)
 class Press(
     @Column(name = "name", nullable = false)
     var name: String,

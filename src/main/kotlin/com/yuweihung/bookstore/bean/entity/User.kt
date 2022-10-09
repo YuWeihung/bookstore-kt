@@ -8,7 +8,9 @@ import javax.persistence.*
 @Entity
 @Table(
     name = "\"user\"",
-    indexes = [Index(name = "uni_username", columnList = "username", unique = true)]
+    indexes = [
+        Index(name = "uni_username", columnList = "username", unique = true),
+    ]
 )
 class User(
     @Column(name = "username", nullable = false)

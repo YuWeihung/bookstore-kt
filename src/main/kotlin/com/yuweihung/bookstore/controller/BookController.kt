@@ -2,7 +2,6 @@ package com.yuweihung.bookstore.controller
 
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.BookService
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -20,7 +19,6 @@ class BookController(
     /**
      * 分页获取书籍
      */
-    @Cacheable("books")
     @GetMapping("/index")
     fun index(
         @RequestParam(value = "page", defaultValue = "1")
@@ -34,7 +32,6 @@ class BookController(
     /**
      * 根据书名搜索书籍
      */
-    @Cacheable("books")
     @GetMapping("/search/name")
     fun searchByName(
         name: String,
@@ -49,7 +46,6 @@ class BookController(
     /**
      * 根据出版社搜索书籍
      */
-    @Cacheable("books")
     @GetMapping("/search/press")
     fun searchByPress(
         pressId: Long,
@@ -64,7 +60,6 @@ class BookController(
     /**
      * 根据作者搜索书籍
      */
-    @Cacheable("books")
     @GetMapping("/search/author")
     fun searchByAuthor(
         authorId: Long,
