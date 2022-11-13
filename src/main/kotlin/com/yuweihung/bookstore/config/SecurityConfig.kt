@@ -38,7 +38,6 @@ class SecurityConfig(
             }
             .formLogin { login ->
                 login
-                    .loginPage("/login")
                     .successHandler(successHandler)
                     .failureHandler(failureHandler)
                     .permitAll()
@@ -52,6 +51,10 @@ class SecurityConfig(
                 exception
                     .accessDeniedHandler(deniedHandler)
                     .authenticationEntryPoint(entryPointHandler)
+            }
+            .sessionManagement { session ->
+                session
+                    .maximumSessions(1)
             }
             .csrf { csrf ->
                 csrf
