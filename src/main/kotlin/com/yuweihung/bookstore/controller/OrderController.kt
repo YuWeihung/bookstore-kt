@@ -4,10 +4,10 @@ import com.yuweihung.bookstore.bean.dto.BuyBookDto
 import com.yuweihung.bookstore.bean.dto.CheckoutDto
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.OrderService
+import jakarta.validation.Valid
+import jakarta.validation.constraints.Min
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
-import javax.validation.constraints.Min
 
 /**
  * 订单控制类

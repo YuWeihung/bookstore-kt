@@ -4,8 +4,8 @@ import com.yuweihung.bookstore.bean.dto.ChangePasswordDto
 import com.yuweihung.bookstore.bean.dto.RegisterDto
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.UserService
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
 
 /**
  * 用户相关的控制类

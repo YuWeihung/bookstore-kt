@@ -2,14 +2,14 @@ package com.yuweihung.bookstore.config.security
 
 import com.yuweihung.bookstore.common.ErrorCode
 import com.yuweihung.bookstore.common.Response
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.InternalAuthenticationServiceException
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.AuthenticationFailureHandler
 import org.springframework.stereotype.Component
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 private val logger = KotlinLogging.logger { }
 

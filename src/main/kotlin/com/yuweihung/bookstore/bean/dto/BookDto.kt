@@ -1,7 +1,7 @@
 package com.yuweihung.bookstore.bean.dto
 
-import javax.validation.constraints.Max
-import javax.validation.constraints.Min
+import jakarta.validation.constraints.Max
+import jakarta.validation.constraints.Min
 
 /**
  * 添加书籍接收的参数

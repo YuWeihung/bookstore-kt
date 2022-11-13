@@ -2,7 +2,7 @@ package com.yuweihung.bookstore.common
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse
 
 /**
  * HTTP 响应的格式定义和封装

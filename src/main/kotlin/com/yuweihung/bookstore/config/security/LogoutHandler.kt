@@ -2,11 +2,11 @@ package com.yuweihung.bookstore.config.security
 
 import com.yuweihung.bookstore.common.ErrorCode
 import com.yuweihung.bookstore.common.Response
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler
 import org.springframework.stereotype.Component
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 /**
  * 注销成功后返回信息

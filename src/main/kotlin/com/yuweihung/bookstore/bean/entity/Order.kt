@@ -1,7 +1,7 @@
 package com.yuweihung.bookstore.bean.entity
 
+import jakarta.persistence.*
 import java.math.BigDecimal
-import javax.persistence.*
 
 /**
  * 订单实体类

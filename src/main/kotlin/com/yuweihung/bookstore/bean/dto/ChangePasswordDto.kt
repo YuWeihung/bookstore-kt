@@ -1,6 +1,6 @@
 package com.yuweihung.bookstore.bean.dto
 
-import javax.validation.constraints.Size
+import jakarta.validation.constraints.Size
 
 /**
  * 更改密码接收的参数

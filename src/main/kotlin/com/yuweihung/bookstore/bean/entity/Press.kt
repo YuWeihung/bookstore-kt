@@ -1,6 +1,6 @@
 package com.yuweihung.bookstore.bean.entity
 
-import javax.persistence.*
+import jakarta.persistence.*
 
 /**
  * 出版社实体类

@@ -1,6 +1,6 @@
 package com.yuweihung.bookstore.bean.dto
 
-import javax.validation.constraints.Min
+import jakarta.validation.constraints.Min
 
 /**
  * 修改库存接收的参数

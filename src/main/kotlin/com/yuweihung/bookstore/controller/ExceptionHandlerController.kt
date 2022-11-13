@@ -3,12 +3,12 @@ package com.yuweihung.bookstore.controller
 import com.yuweihung.bookstore.common.ErrorCode
 import com.yuweihung.bookstore.common.ErrorException
 import com.yuweihung.bookstore.common.Response
+import jakarta.validation.ConstraintViolationException
 import mu.KotlinLogging
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import javax.validation.ConstraintViolationException
 
 private val logger = KotlinLogging.logger { }
 

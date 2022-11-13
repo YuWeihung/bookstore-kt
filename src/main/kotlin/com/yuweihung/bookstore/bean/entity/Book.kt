@@ -1,8 +1,8 @@
 package com.yuweihung.bookstore.bean.entity
 
+import jakarta.persistence.*
 import java.math.BigDecimal
 import java.time.YearMonth
-import javax.persistence.*
 
 /**
  * 书籍实体类

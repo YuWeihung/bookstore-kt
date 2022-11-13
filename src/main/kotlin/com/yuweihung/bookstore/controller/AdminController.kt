@@ -4,8 +4,8 @@ import com.yuweihung.bookstore.bean.dto.BookDto
 import com.yuweihung.bookstore.bean.dto.InventoryDto
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.AdminService
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
-import javax.validation.Valid
 
 /**
  * 管理员控制类

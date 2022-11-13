@@ -1,6 +1,6 @@
 package com.yuweihung.bookstore.bean.dto
 
-import javax.validation.constraints.Pattern
+import jakarta.validation.constraints.Pattern
 
 /**
  * 提交订单接收的参数

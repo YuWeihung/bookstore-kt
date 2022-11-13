@@ -2,7 +2,7 @@ package com.yuweihung.bookstore.config
 
 import com.yuweihung.bookstore.common.Constant
 import com.yuweihung.bookstore.config.redis.CustomKeyGenerator
-import org.springframework.cache.annotation.CachingConfigurerSupport
+import org.springframework.cache.annotation.CachingConfigurer
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.interceptor.KeyGenerator
 import org.springframework.context.annotation.Bean
@@ -24,7 +24,7 @@ import java.time.Duration
 @Configuration
 class RedisConfig(
     val keyGenerator: CustomKeyGenerator,
-) : CachingConfigurerSupport() {
+) : CachingConfigurer {
     /**
      *  配置 redisTemplate，设置 JSON 序列化器
      */
@@ -55,7 +55,8 @@ class RedisConfig(
             .entryTtl(Duration.ofMinutes(Constant.CACHE_EXPIRATION_TIME))
     }
 
-    override fun keyGenerator(): KeyGenerator? {
+    @Bean
+    override fun keyGenerator(): KeyGenerator {
         return keyGenerator
     }
 

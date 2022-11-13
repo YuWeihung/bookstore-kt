@@ -3,11 +3,11 @@ package com.yuweihung.bookstore.controller
 import com.yuweihung.bookstore.bean.dto.AddressDto
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.AddressService
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import javax.validation.Valid
 
 /**
  * 收货地址控制类
