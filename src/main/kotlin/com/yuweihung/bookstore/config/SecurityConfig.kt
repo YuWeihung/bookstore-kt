@@ -3,8 +3,11 @@ package com.yuweihung.bookstore.config
 import com.yuweihung.bookstore.config.security.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
@@ -20,47 +23,40 @@ class SecurityConfig(
     val logoutHandler: LogoutHandler,
     val deniedHandler: DeniedHandler,
     val entryPointHandler: EntryPointHandler,
+    val authenticationConfiguration: AuthenticationConfiguration,
 ) {
     /**
      * 权限相关认证
      */
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http
-            .authorizeHttpRequests { authorize ->
-                authorize
-                    .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                    .requestMatchers("/register/**").anonymous()
-                    .requestMatchers("/index/**").permitAll()
-                    .requestMatchers("/search/**").permitAll()
-                    .requestMatchers("/test/**").permitAll()
-                    .anyRequest().authenticated()
+        http {
+            authorizeRequests {
+                authorize("/admin/**", hasAuthority("ROLE_ADMIN"))
+                authorize("/register/**", permitAll)
+                authorize("/index/**", permitAll)
+                authorize("/search/**", permitAll)
+                authorize("/test/**", permitAll)
+                authorize(anyRequest, authenticated)
             }
-            .formLogin { login ->
-                login
-                    .successHandler(successHandler)
-                    .failureHandler(failureHandler)
-                    .permitAll()
+            formLogin {
+                authenticationSuccessHandler = successHandler
+                authenticationFailureHandler = failureHandler
+                permitAll()
             }
-            .logout { logout ->
-                logout
-                    .logoutSuccessHandler(logoutHandler)
-                    .permitAll()
+            logout {
+                logoutSuccessHandler = logoutHandler
+                deleteCookies("JSESSIONID")
+                permitAll()
             }
-            .exceptionHandling { exception ->
-                exception
-                    .accessDeniedHandler(deniedHandler)
-                    .authenticationEntryPoint(entryPointHandler)
+            exceptionHandling {
+                accessDeniedHandler = deniedHandler
+                authenticationEntryPoint = entryPointHandler
             }
-            .sessionManagement { session ->
-                session
-                    .maximumSessions(1)
+            csrf {
+                disable()
             }
-            .csrf { csrf ->
-                csrf
-                    .disable()
-            }
-
+        }
         return http.build()
     }
 
@@ -70,6 +66,14 @@ class SecurityConfig(
     @Bean
     fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
+    }
+
+    /**
+     * 获取 AuthenticationManager
+     */
+    @Bean
+    fun authenticationManager(): AuthenticationManager {
+        return authenticationConfiguration.authenticationManager
     }
 
 }
