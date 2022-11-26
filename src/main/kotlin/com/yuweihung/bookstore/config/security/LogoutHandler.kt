@@ -18,7 +18,6 @@ class LogoutHandler : LogoutSuccessHandler {
         response: HttpServletResponse?,
         authentication: Authentication?,
     ) {
-
         val result = if (authentication == null) {
             Response.failure(ErrorCode.USER_NOT_LOGIN)
         } else {

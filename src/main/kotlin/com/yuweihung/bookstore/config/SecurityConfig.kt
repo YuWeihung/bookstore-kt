@@ -31,7 +31,7 @@ class SecurityConfig(
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http {
-            authorizeRequests {
+            authorizeHttpRequests {
                 authorize("/admin/**", hasAuthority("ROLE_ADMIN"))
                 authorize("/register/**", permitAll)
                 authorize("/index/**", permitAll)
@@ -42,12 +42,9 @@ class SecurityConfig(
             formLogin {
                 authenticationSuccessHandler = successHandler
                 authenticationFailureHandler = failureHandler
-                permitAll()
             }
             logout {
                 logoutSuccessHandler = logoutHandler
-                deleteCookies("JSESSIONID")
-                permitAll()
             }
             exceptionHandling {
                 accessDeniedHandler = deniedHandler
