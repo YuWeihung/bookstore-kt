@@ -11,7 +11,10 @@ class Constant {
         // redis 缓存时间
         const val CACHE_EXPIRATION_TIME = 5L
 
-        // JWT token 有效期
+        // JWT Token 有效期
         const val TOKEN_EXPIRATION_TIME = 36000L
+
+        // Refresh Token 权限
+        const val TOKEN_SCOPE = "SCOPE_TOKEN"
     }
 }

@@ -4,8 +4,11 @@ import com.yuweihung.bookstore.bean.dto.ChangePasswordDto
 import com.yuweihung.bookstore.bean.dto.LoginDto
 import com.yuweihung.bookstore.bean.dto.RegisterDto
 import com.yuweihung.bookstore.common.Response
+import com.yuweihung.bookstore.service.JwtService
 import com.yuweihung.bookstore.service.UserService
 import jakarta.validation.Valid
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -14,13 +17,23 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class UserController(
     val userService: UserService,
+    val jwtService: JwtService,
 ) {
     /**
      * 登录
      */
     @PostMapping("/login")
     fun login(@Valid @RequestBody loginDto: LoginDto): Response {
-        val result = userService.login(loginDto)
+        val result = jwtService.login(loginDto)
+        return Response.success(result)
+    }
+
+    /**
+     * 刷新 Token
+     */
+    @GetMapping("/refresh-token")
+    fun refreshToken(authentication: Authentication): Response {
+        val result = jwtService.refreshToken(authentication)
         return Response.success(result)
     }
 
@@ -38,7 +51,8 @@ class UserController(
      */
     @PostMapping("/change-password")
     fun changePassword(@Valid @RequestBody changePasswordDto: ChangePasswordDto): Response {
-        val result = userService.changePassword(changePasswordDto)
+        val authentication = SecurityContextHolder.getContext().authentication
+        val result = userService.changePassword(changePasswordDto, authentication.name)
         return Response.success(result)
     }
 

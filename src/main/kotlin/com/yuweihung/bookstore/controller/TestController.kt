@@ -2,10 +2,10 @@ package com.yuweihung.bookstore.controller
 
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.TestService
-import org.springframework.security.core.Authentication
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import java.security.Principal
 
 /**
  * 测试用控制类
@@ -27,8 +27,8 @@ class TestController(
     }
 
     @GetMapping("/hello")
-    fun hello(authentication: Authentication): Response {
-        return Response.success("hello, ${authentication.name}")
+    fun hello(principal: Principal): Response {
+        return Response.success("hello, ${principal.name}")
     }
 
 }

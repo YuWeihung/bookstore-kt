@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.JWKSet
 import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet
 import com.nimbusds.jose.proc.SecurityContext
+import com.yuweihung.bookstore.common.Constant
 import com.yuweihung.bookstore.config.security.*
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -46,6 +47,7 @@ class SecurityConfig(
             authorizeHttpRequests {
                 authorize("/admin/**", hasAuthority("ROLE_ADMIN"))
                 authorize("/login", permitAll)
+                authorize("/refresh-token", hasAuthority(Constant.TOKEN_SCOPE))
                 authorize("/register", permitAll)
                 authorize("/index", permitAll)
                 authorize("/search/**", permitAll)
