@@ -2,6 +2,7 @@ package com.yuweihung.bookstore.controller
 
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.TestService
+import org.springframework.security.core.Authentication
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -22,17 +23,12 @@ class TestController(
 
     @GetMapping("/admin/hello")
     fun helloAdmin(): Response {
-        return Response.success("hello, admin")
+        return Response.success("You are admin!")
     }
 
     @GetMapping("/hello")
-    fun hello(): Response {
-        return Response.success("hello, world")
+    fun hello(authentication: Authentication): Response {
+        return Response.success("hello, ${authentication.name}")
     }
-
-//    @GetMapping("/test")
-//    fun test(): Response {
-//        return Response.success()
-//    }
 
 }

@@ -6,6 +6,8 @@ import com.yuweihung.bookstore.common.Response
 import jakarta.validation.ConstraintViolationException
 import mu.KotlinLogging
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.authentication.InternalAuthenticationServiceException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -24,6 +26,24 @@ class ExceptionHandlerController {
     fun handleErrorException(e: ErrorException): Response {
         logger.info { "业务异常: ${e.message}" }
         return Response.failure(e)
+    }
+
+    /**
+     * 用户名或密码错误
+     */
+    @ExceptionHandler(BadCredentialsException::class)
+    fun handlePasswordWrongException(e: BadCredentialsException): Response {
+        logger.info { "登录异常: ${e.message}" }
+        return Response.failure(ErrorCode.PASSWORD_WRONG)
+    }
+
+    /**
+     * 用户名不存在
+     */
+    @ExceptionHandler(InternalAuthenticationServiceException::class)
+    fun handleUserNotExistException(e: InternalAuthenticationServiceException): Response {
+        logger.info { "登录异常: ${e.message}" }
+        return Response.failure(ErrorCode.USER_NOT_EXIST)
     }
 
     /**
