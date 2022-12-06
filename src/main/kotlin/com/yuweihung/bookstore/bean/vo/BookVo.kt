@@ -20,16 +20,16 @@ class BookVo() {
     var authors: List<AuthorVo> = listOf()
 
     constructor(book: Book) : this() {
-        bookId = book.id
-        name = book.name
-        isbn = book.isbn
-        price = book.price
-        page = book.page
-        publishYear = book.publishDate.year
-        publishMonth = book.publishDate.monthValue
-        inventory = book.inventory
-        pressId = book.press.id
-        pressName = book.press.name
-        authors = book.authors.map { AuthorVo(it.id, it.name) }
+        this.bookId = book.id
+        this.name = book.name
+        this.isbn = book.isbn
+        this.price = book.price
+        this.page = book.page
+        this.publishYear = book.publishDate.year
+        this.publishMonth = book.publishDate.monthValue
+        this.inventory = book.inventory
+        this.pressId = book.press.id
+        this.pressName = book.press.name
+        this.authors = book.authors.map { AuthorVo(it.id, it.name) }
     }
 }

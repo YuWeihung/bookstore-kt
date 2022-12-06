@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern
  */
 data class CheckoutDto(
    val username: String,
-   @get: Pattern(regexp = "\\d{11}", message = "手机号码格式错误")
+   @get: Pattern(regexp = "^1\\d{10}$", message = "手机号码格式错误")
    val phoneNumber: String,
    val address: String,
 )

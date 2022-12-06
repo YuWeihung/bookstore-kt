@@ -6,14 +6,14 @@ import java.math.BigDecimal
 /**
  * 购物车信息
  */
-class CartVo() {
-    var cartId: Long? = null
-    var books: List<ItemVo> = listOf()
-    var totalPrice: BigDecimal = BigDecimal("0.00")
+class CartVo(cart: Cart) {
+    val cartId: Long?
+    val books: List<ItemVo>
+    val totalPrice: BigDecimal
 
-    constructor(cart: Cart) : this() {
-        cartId = cart.id
-        books = cart.items.map { ItemVo(it.book.id, it.book.name, it.book.price, it.amount) }
-        totalPrice = cart.totalPrice
+    init {
+        this.cartId = cart.id
+        this.books = cart.items.map { ItemVo(it.book.id, it.book.name, it.book.price, it.amount) }
+        this.totalPrice = cart.totalPrice
     }
 }

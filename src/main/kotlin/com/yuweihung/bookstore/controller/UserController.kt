@@ -2,12 +2,12 @@ package com.yuweihung.bookstore.controller
 
 import com.yuweihung.bookstore.bean.dto.ChangePasswordDto
 import com.yuweihung.bookstore.bean.dto.LoginDto
+import com.yuweihung.bookstore.bean.dto.RefreshTokenDto
 import com.yuweihung.bookstore.bean.dto.RegisterDto
 import com.yuweihung.bookstore.common.Response
 import com.yuweihung.bookstore.service.JwtService
 import com.yuweihung.bookstore.service.UserService
 import jakarta.validation.Valid
-import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 
@@ -31,9 +31,9 @@ class UserController(
     /**
      * 刷新 Token
      */
-    @GetMapping("/refresh-token")
-    fun refreshToken(authentication: Authentication): Response {
-        val result = jwtService.refreshToken(authentication)
+    @PostMapping("/refresh-token")
+    fun refreshToken(@RequestBody tokenDto: RefreshTokenDto): Response {
+        val result = jwtService.refreshToken(tokenDto.accessToken)
         return Response.success(result)
     }
 

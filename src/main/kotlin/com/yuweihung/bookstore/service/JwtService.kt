@@ -6,8 +6,8 @@ import com.yuweihung.bookstore.bean.vo.TokenVo
 import com.yuweihung.bookstore.common.Constant
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
-import org.springframework.security.core.Authentication
 import org.springframework.security.oauth2.jwt.JwtClaimsSet
+import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.JwtEncoder
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters
 import org.springframework.stereotype.Service
@@ -16,6 +16,7 @@ import java.time.Instant
 @Service
 class JwtService(
     val jwtEncoder: JwtEncoder,
+    val jwtDecoder: JwtDecoder,
     val authenticationConfiguration: AuthenticationConfiguration,
 ) {
     /**
@@ -38,10 +39,12 @@ class JwtService(
     /**
      * 刷新 Token
      */
-    fun refreshToken(authentication: Authentication): TokenVo {
-        val username = authentication.name
+    fun refreshToken(token: String): TokenVo {
+        val jwt = jwtDecoder.decode(token)
+        val claims = jwt.claims
         val now = Instant.now()
-        val scope = authentication.authorities.joinToString(separator = " ") { it.authority }
+        val username = claims["sub"].toString()
+        val scope = claims["scope"].toString()
         val accessToken = generateAccessToken(username, now, scope)
         val refreshToken = generateRefreshToken(username, now)
         return TokenVo(accessToken, refreshToken)

@@ -8,26 +8,26 @@ import java.time.LocalDateTime
 /**
  * 订单信息
  */
-class OrderVo() {
-    var orderId: Long? = null
-    var username: String = ""
-    var books: List<ItemVo> = listOf()
-    var totalPrice: BigDecimal = BigDecimal("0.00")
-    var phoneNumber: String = ""
-    var address: String = ""
-    var status: String = ""
+class OrderVo(order: Order) {
+    val orderId: Long?
+    val username: String
+    val books: List<ItemVo>
+    val totalPrice: BigDecimal
+    val phoneNumber: String
+    val address: String
+    val status: String
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    var createTime: LocalDateTime? = null
+    val createTime: LocalDateTime?
 
-    constructor(order: Order) : this() {
-        orderId = order.id
-        username = order.user.username
-        books = order.items.map { ItemVo(it.book.id, it.book.name, it.book.price, it.amount) }
-        totalPrice = order.totalPrice
-        createTime = order.createdTime
-        phoneNumber = order.phoneNumber
-        address = order.address
-        status = order.status.value
+    init {
+        this.orderId = order.id
+        this.username = order.user.username
+        this.books = order.items.map { ItemVo(it.book.id, it.book.name, it.book.price, it.amount) }
+        this.totalPrice = order.totalPrice
+        this.createTime = order.createdTime
+        this.phoneNumber = order.phoneNumber
+        this.address = order.address
+        this.status = order.status.value
     }
 }
