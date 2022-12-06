@@ -11,7 +11,6 @@ import java.time.YearMonth
 @Table(
     name = "book",
     indexes = [
-        Index(name = "idx_name", columnList = "name", unique = false),
         Index(name = "uni_isbn", columnList = "isbn", unique = true),
     ]
 )

@@ -12,17 +12,17 @@ import java.time.LocalDateTime
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-class BaseEntity {
+open class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    var id: Long? = null
+    open var id: Long? = null
 
     @CreatedDate
     @Column(name = "created_time", nullable = false)
-    var createdTime: LocalDateTime? = null
+    open var createdTime: LocalDateTime? = null
 
     @LastModifiedDate
     @Column(name = "modified_time", nullable = false)
-    var modifiedTime: LocalDateTime? = null
+    open var modifiedTime: LocalDateTime? = null
 }

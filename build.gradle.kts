@@ -8,11 +8,6 @@ plugins {
     kotlin("plugin.jpa") version "1.7.21"
 }
 
-allOpen {
-    annotation("jakarta.persistence.MappedSuperclass")
-    annotation("jakarta.persistence.Entity")
-}
-
 group = "com.yuweihung"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
