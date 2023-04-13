@@ -1,4 +1,4 @@
-# bookstore-api
+# bookstore-kt
 
 这里是书店项目的后端代码
 
